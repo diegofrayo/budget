@@ -1,0 +1,36 @@
+{
+  "extends": ["eslint:all", "plugin:react/recommended", "airbnb", "prettier"],
+  "parser": "babel-eslint",
+  "plugins": ["react", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "classes": true,
+      "jsx": true,
+      "spread": true,
+      "experimentalObjectRestSpread": true,
+      "restParams": true
+    }
+  },
+  "globals": {
+    "APP_SETTINGS": true,
+    "console": true,
+    "document": true,
+    "fetch": true,
+    "Promise": true,
+    "window": true
+  },
+  "rules": {
+    "arrow-body-style": 0,
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "no-console": 0,
+
+    "no-param-reassign": 1,
+    "no-unused-expressions": 1,
+    "no-unused-vars": 1,
+    "prefer-promise-reject-errors": 1,
+  }
+}
