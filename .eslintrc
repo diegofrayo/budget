@@ -27,10 +27,13 @@
     "import/no-unresolved": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "no-console": 0,
+    "react/forbid-prop-types": 0,
 
     "no-param-reassign": 1,
     "no-unused-expressions": 1,
     "no-unused-vars": 1,
     "prefer-promise-reject-errors": 1,
+    "jsx-a11y/no-noninteractive-element-interactions": 1,
+    "jsx-a11y/click-events-have-key-events": 1
   }
 }

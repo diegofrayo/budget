@@ -16,6 +16,7 @@ body {
 
 body {
   font-family: 'Source Sans Pro', serif;
+  font-size: 18px;
 }
 
 p,
@@ -97,7 +98,7 @@ a:hover {
 }
 
 .u-box-shadow {
-  box-shadow: 0px 0px 10px 1px black;
+  box-shadow: 0 0 10px 1px black;
 }
 
 .u-text-center {

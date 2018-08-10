@@ -26,11 +26,6 @@ try {
 
 //----------------------------------------------------
 //------------------- Util Functions -----------------
-const createCSSTags = cssSources => {
-  const createTag = url => `<link href="${url}" rel="stylesheet"/>`;
-  return cssSources.map(url => createTag(url)).join('\n\t');
-};
-
 const createJSTags = jsSources => {
   const createTag = url => `<script src="${url}"></script>`;
   return jsSources.map(url => createTag(url)).join('\n\t');
@@ -39,13 +34,7 @@ const createJSTags = jsSources => {
 //----------------------------------------------------
 //------------------- JS Tasks -----------------------
 gulp.task('build-js', () => {
-  return gulp.src('./build/js/bundle.js').pipe(gulp.dest(`${destPath}/js`));
-});
-
-//----------------------------------------------------
-//------------------- CSS Tasks -----------------------
-gulp.task('build-css', () => {
-  return gulp.src('./build/css/styles.css').pipe(gulp.dest(`${destPath}/css`));
+  return gulp.src('./build/bundle.js').pipe(gulp.dest(`${destPath}/js`));
 });
 
 //----------------------------------------------------
@@ -58,21 +47,17 @@ gulp.task('build-html', () => {
 
   if (environment === 'development') {
 
-    cssSources = [];
-    jsSources = ['/js/bundle.js'];
+    jsSources = ['js/bundle.js'];
 
     return stream
-      .pipe(g.replace('<!-- INJECT:css -->', createCSSTags(cssSources)))
       .pipe(g.replace('<!-- INJECT:js -->', createJSTags(jsSources)))
       .pipe(gulp.dest(destPath));
 
   } else {
 
-    cssSources = [`/css/styles.css?tm=${timestamp}`];
-    jsSources = [`/js/bundle.js?tm=${timestamp}`];
+    jsSources = [`/budget/js/bundle.js?tm=${timestamp}`];
 
     return stream
-      .pipe(g.replace('<!-- INJECT:css -->', createCSSTags(cssSources)))
       .pipe(g.replace('<!-- INJECT:js -->', createJSTags(jsSources)))
       .pipe(g.htmlmin(HTML_MIN_OPTS))
       .pipe(gulp.dest(destPath));
@@ -98,5 +83,5 @@ gulp.task('build-dev', () => {
 gulp.task('build-live', () => {
   environment = 'production';
   destPath = settings[environment].dest_path;
-  g.runSequence('build-js', 'build-css', 'build-html', 'copy-assets');
+  g.runSequence('build-js', 'build-html', 'copy-assets');
 });

@@ -42,9 +42,9 @@ module.exports = task(
 
           bs.init(
             {
-              port: Number(process.env.PORT) || 4567,
+              port: Number(process.env.PORT) || 3000,
               ui: {
-                port: Number(process.env.PORT || 4567) + 1,
+                port: Number(process.env.PORT || 3000) + 1,
               },
               server: {
                 baseDir: 'build',

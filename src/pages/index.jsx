@@ -1,18 +1,19 @@
 // npm libs
 import React from 'react';
 import PropTypes from 'prop-types';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
+import ReactRouter from 'react-router-dom/Router';
 import { AppContainer } from 'react-hot-loader';
+import { ThemeProvider } from 'emotion-theming';
 
 // components
 import Header from 'components/layout/Header';
 import ErrorBoundary from 'hocs/ErrorBoundary';
 
 // Routing
-import { Router } from 'routing';
+import { Router, history } from 'routing';
 
 // theme
-import { createPlainStylesObject } from 'styles/createStylesheet';
+import { createPlainStylesObject, theme as appTheme } from 'styles/createStylesheet';
 
 const styles = createPlainStylesObject(theme => ({
   container: {
@@ -44,9 +45,11 @@ App.propTypes = {
 };
 
 const renderApp = () => (
-  <BrowserRouter>
-    <App header={() => <Header />} body={() => <Router />} />
-  </BrowserRouter>
+  <ReactRouter history={history}>
+    <ThemeProvider theme={appTheme}>
+      <App header={() => <Header />} body={() => <Router />} />
+    </ThemeProvider>
+  </ReactRouter>
 );
 
 const Root = () => {

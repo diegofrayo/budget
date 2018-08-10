@@ -93,7 +93,7 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/react'],
             env: {
               production: {
-                plugins: ['transform-remove-console', 'react-optimize'],
+                plugins: ['transform-remove-console'],
               },
             },
           },
