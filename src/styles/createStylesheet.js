@@ -7,9 +7,8 @@ const FONT_SIZE_BASE = 18;
 const TONES = [100, 200, 300, 400, 500, 600, 700];
 
 export const theme = {
-
   headerHeight: 70,
-  maxWidthContainer: 991,
+  maxWidthContainer: 767,
 
   mediaQueries: {
     mobile: {
@@ -20,6 +19,7 @@ export const theme = {
 
   spacing: {
     base: 10,
+    xsmall: 5 / 2,
     small: 5,
     normal: 10,
     medium: 15,
@@ -36,20 +36,11 @@ export const theme = {
     xlarge: FONT_SIZE_BASE + 6,
   },
 
-  fontWeight: {
-    thin: 100,
-    normal: 400,
-    semibold: 500,
-    bold: 700,
-  },
-
   shadow: {
     base: (color = '#CACACA') => `0 0 5px 0 ${color}`,
   },
 
   color: {
-    sample1: '#FFF',
-
     sample2: TONES.reduce((acum, current, index) => {
       // eslint-disable-next-line
       acum[current] = chroma('#555')
@@ -67,6 +58,7 @@ export const createClassname = fn => {
 export const createStyledComponent = (tagName, fn) => {
   return styled(tagName)(fn(theme));
 };
+
 export const createStyledComponentWithProps = (tagName, fn) => {
   return styled(tagName)(fn);
 };
@@ -74,7 +66,7 @@ export const createStyledComponentWithProps = (tagName, fn) => {
 export const createStylesheet = fn => {
   const styles = fn(theme);
   return Object.keys(styles).reduce((acum, curr) => {
-    acum[curr] = css(styles[curr]);
+    acum[curr] = css(styles[curr]); // eslint-disable-line
     return acum;
   }, {});
 };

@@ -13,64 +13,62 @@ const getCurrentDate = () => {
 export default {
   title: {
     element: 'input',
-    label: 'Title',
     errorMessage: 'Please type a valid title',
+    inputProps: {},
+    label: 'Title',
     required: true,
+    type: 'text',
     validate: value => {
       return value || false;
-    },
-    inputProps: {
-      type: 'text',
     },
   },
   description: {
     element: 'textarea',
-    label: 'Description',
     errorMessage: 'Please type a valid description',
+    inputProps: {},
+    label: 'Description',
     required: false,
+    type: 'text',
     validate: value => {
       return value || false;
-    },
-    inputProps: {
-      type: 'text',
     },
   },
   date: {
+    defaultValue: getCurrentDate(),
     element: 'input',
-    label: 'Date',
     errorMessage: 'Please type a valid date',
+    inputProps: {},
+    label: 'Date',
     required: true,
+    type: 'date',
     validate: value => {
       return value || false;
-    },
-    inputProps: {
-      defaultValue: getCurrentDate(),
-      type: 'date',
     },
   },
   amount: {
+    defaultValue: 1000,
     element: 'input',
-    label: 'Amount',
     errorMessage: 'Please type a valid amount',
+    inputProps: {
+      min: 1000,
+      step: 1000,
+    },
+    label: 'Amount',
     required: true,
+    type: 'number',
     validate: value => {
       return value || false;
-    },
-    inputProps: {
-      type: 'number',
     },
   },
   category: {
-    element: 'select',
-    label: 'Category',
-    errorMessage: 'Please type a valid category',
-    required: false,
-    validate: value => {
-      return value || false;
-    },
     component: Dropdown,
+    defaultValue: 'comida',
+    element: 'select',
+    errorMessage: 'Please type a valid category',
+    label: 'Category',
+    required: true,
+    type: 'text',
     inputProps: {
-      defaultValue: 'comida',
       options: [
         { label: 'Paseos', value: 'paseos' },
         { label: 'Entretenimiento', value: 'entretenimiento' },
@@ -78,7 +76,9 @@ export default {
         { label: 'Comida', value: 'comida' },
         { label: 'Hogar', value: 'hogar' },
       ],
-      type: 'text',
+    },
+    validate: value => {
+      return value || false;
     },
   },
 };

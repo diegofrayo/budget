@@ -39,33 +39,38 @@ const MenuContainer = createStyledComponentWithProps(
     will-change: transform;
     z-index: 200;
 
-    .menu{
+    .menu {
       margin: 0;
       padding: 0;
       width: 100%;
     }
 
-    .menu-header{
-      border-bottom: ${`1px solid gray`};
+    .menu-header {
+      background-color: #eee;
+      box-shadow: ${theme.shadow.base('gray')};
       color: black;
       cursor: default;
       font-size: ${theme.fontSize.xlarge}px;
-      font-weight: ${theme.fontWeight.bold};
+      font-weight: 700;
       margin-bottom: ${theme.spacing.base}px;
-      padding: ${`${theme.spacing.large}px ${theme.spacing.base}px`};
+      padding: ${theme.spacing.large}px ${theme.spacing.base}px;
       text-align: center;
     }
 
-    .icon{
-      margin-right: ${theme.spacing.base};
+    .icon {
+      margin-right: ${theme.spacing.small}px;
     }
 
-    .menu-item{
+    .button {
       color: black;
       cursor: pointer;
-      font-size: ${theme.fontSize.small};
-      font-weight: ${theme.fontWeight.normal};
-      padding: ${`${theme.spacing.medium}px ${theme.spacing.large}px`};
+      background-color: transparent;
+      border: 0;
+      font-size: ${theme.fontSize.normal}px;
+      outline: 0;
+      padding: ${theme.spacing.medium}px ${theme.spacing.large}px;
+      text-align: left;
+      width: 100%;
     }
   `
 );
@@ -94,15 +99,13 @@ const MainMenu = props => [
     <ul className="menu">
       <li className="menu-header">
         <i className="material-icons icon">monetization_on</i>
-        <span>budget</span>
+        <span>{APP_SETTINGS.app_name}</span>
       </li>
       {menuItems.map(item => (
-        <li
-          key={`menu-item-${item.route}`}
-          className="menu-item"
-          onClick={onClickMenuItem(props.onClickOpenMenu, item.route)}
-        >
-          {item.name}
+        <li key={`menu-item-${item.route}`} className="menu-item">
+          <button className="button" onClick={onClickMenuItem(props.onClickOpenMenu, item.route)}>
+            {item.name}
+          </button>
         </li>
       ))}
     </ul>

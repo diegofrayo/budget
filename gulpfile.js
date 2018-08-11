@@ -51,6 +51,7 @@ gulp.task('build-html', () => {
 
     return stream
       .pipe(g.replace('<!-- INJECT:js -->', createJSTags(jsSources)))
+      .pipe(g.replace('<!-- APP_NAME -->', settings[environment].app_name))
       .pipe(gulp.dest(destPath));
 
   } else {
@@ -59,6 +60,7 @@ gulp.task('build-html', () => {
 
     return stream
       .pipe(g.replace('<!-- INJECT:js -->', createJSTags(jsSources)))
+      .pipe(g.replace('<!-- APP_NAME -->', settings[environment].app_name))
       .pipe(g.htmlmin(HTML_MIN_OPTS))
       .pipe(gulp.dest(destPath));
 

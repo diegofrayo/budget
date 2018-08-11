@@ -9,7 +9,7 @@ import Summary from 'pages/Summary';
 import Home from 'pages/Home';
 
 const history = createHistory();
-const ROOT = APP_SETTINGS.environment === 'development' ? '' : '/budget';
+const ROOT = APP_SETTINGS.environment === 'development' ? '' : `/${APP_SETTINGS.app_name}`;
 const routes = {
   HOME: ROOT === '' ? '/' : ROOT,
   SUMMARY: `${ROOT}/summary`,

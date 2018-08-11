@@ -2,24 +2,56 @@
 import React from 'react';
 import classnames from 'classnames';
 
-// fomr config
+// services
+import { createTransaction } from 'services/firebase';
+
+// components
+import PageContainer from 'components/layout/PageContainer';
+
+// form config
 import formConfig from './formConfig';
 
 // styles
-import { Container, Form, Label, Button, ErrorMessage, Title } from './styles';
+import { FormContainer, Title, Form, Label, ResponseMessage, Button } from './styles';
 
 class Home extends React.Component {
-  state = {
-    form: {},
-    errors: {
+  static initialState = {
+    formErrors: {
       valid: false,
       messages: {},
     },
+    responseMessage: {
+      type: '',
+      message: '',
+      show: false,
+    },
+  };
+
+  state = {
+    formValues: Object.entries(formConfig).reduce((acum, [inputName, inputConfig]) => {
+      if (inputConfig.defaultValue) {
+        acum[inputName] = inputConfig.defaultValue; // eslint-disable-line
+      }
+      return acum;
+    }, {}),
+    ...Home.initialState,
   };
 
   onSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
+    createTransaction(this.state.formValues)
+      .then(() => {
+        this.showResponseMessage({
+          type: 'success',
+          message: 'Transaction created',
+        });
+      })
+      .catch(() => {
+        this.showResponseMessage({
+          type: 'error',
+          message: 'Transaction has not been created, please try again later',
+        });
+      });
   };
 
   onChangeInput = event => {
@@ -27,62 +59,92 @@ class Home extends React.Component {
 
     this.setState(prevState => {
       const formValues = {
-        ...prevState.form,
+        ...prevState.formValues,
         [name]: value,
       };
       return {
         ...prevState,
-        form: formValues,
-        errors: this.validateForm(formValues),
+        formValues,
+        formErrors: this.validateForm(name, formValues, prevState.formErrors),
       };
     });
   };
 
-  validateForm = formValues => {
+  showResponseMessage = responseMessage => {
+    this.setState({
+      responseMessage: {
+        ...responseMessage,
+        show: true,
+      },
+    });
+    setTimeout(() => this.setState({ responseMessage: Home.initialState }), 5000);
+  };
+
+  validateForm = (inputNameParam, formValues, formErrors) => {
     return Object.entries(formConfig).reduce(
-      (acum, [key, inputConfig]) => {
-        if (inputConfig.required && inputConfig.validate(formValues[key]) === false) {
-          acum.messages[key] = inputConfig.errorMessage;
-          acum.valid = false;
+      (acum, [inputName, inputConfig]) => {
+        if (inputConfig.required && inputConfig.validate(formValues[inputName]) === false) {
+          acum.valid = false; // eslint-disable-line
+          if (inputName === inputNameParam) {
+            acum.messages[inputName] = inputConfig.errorMessage; // eslint-disable-line
+          }
         } else {
-          acum.messages[key] = '';
+          acum.messages[inputName] = ''; // eslint-disable-line
         }
 
         return acum;
       },
-      { valid: true, messages: {} }
+      { valid: true, messages: { ...formErrors.messages } }
     );
   };
 
   render() {
     return (
-      <Container>
-        <Title>Create a transaction</Title>
-        <Form onSubmit={this.onSubmit}>
-          {Object.entries(formConfig).map(([key, value]) => {
-            const Element = value.component || value.element;
-            const errorMessage = this.state.errors[key] || false;
+      <PageContainer>
+        <FormContainer>
+          <Title>Create a transaction</Title>
+          <Form onSubmit={this.onSubmit}>
+            <section className="inputs-container">
+              <fieldset className="fieldset">
+                {Object.entries(formConfig).map(([inputName, inputConfig]) => {
+                  const Element = inputConfig.component || inputConfig.element;
+                  const errorMessage = this.state.formErrors.messages[inputName] || false;
 
-            return (
-              <Label key={key} htmlFor={key} error={errorMessage}>
-                {value.label && <span>{value.label}</span>}
-                <Element
-                  id={key}
-                  name={key}
-                  value={this.state.form[key]}
-                  className={classnames('input', Element)}
-                  onChange={this.onChangeInput}
-                  {...value.inputProps}
-                />
-                {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-              </Label>
-            );
-          })}
-          <Button type="submit" disabled={this.state.errors.valid === false}>
-            Create
-          </Button>
-        </Form>
-      </Container>
+                  return (
+                    <Label
+                      key={inputName}
+                      htmlFor={inputName}
+                      error={errorMessage}
+                      required={inputConfig.required}
+                    >
+                      {inputConfig.label && <span className="label-text">{inputConfig.label}</span>}
+                      <Element
+                        id={inputName}
+                        name={inputName}
+                        value={this.state.formValues[inputName] || inputConfig.defaultValue || ''}
+                        type={inputConfig.type}
+                        className={classnames('input', Element)}
+                        onChange={this.onChangeInput}
+                        {...inputConfig.inputProps}
+                      />
+                      {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    </Label>
+                  );
+                })}
+              </fieldset>
+              <ResponseMessage
+                show={this.state.responseMessage.show}
+                type={this.state.responseMessage.type}
+              >
+                {this.state.responseMessage.message}
+              </ResponseMessage>
+            </section>
+            <Button type="submit" disabled={this.state.formErrors.valid === false}>
+              Create
+            </Button>
+          </Form>
+        </FormContainer>
+      </PageContainer>
     );
   }
 }

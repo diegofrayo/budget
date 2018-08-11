@@ -28,7 +28,7 @@ const styles = createPlainStylesObject(theme => ({
     color: 'black',
     flex: 1,
     overflow: 'auto',
-    padding: theme.spacing.medium,
+    padding: `${theme.spacing.xlarge}px ${theme.spacing.large}px`,
   },
 }));
 

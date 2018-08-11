@@ -9,6 +9,9 @@ import Root from 'pages';
 import { createPlainStylesObject } from 'styles/createStylesheet';
 import 'styles/mainTheme';
 
+// tracking
+import 'services/tracking';
+
 const styles = createPlainStylesObject(() => ({
   'background-color': 'white',
   display: 'flex',

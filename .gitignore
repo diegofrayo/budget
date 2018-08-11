@@ -1,6 +1,9 @@
 node_modules/
 build/
+
 config.app.json
 package-lock.json
+src/services/tracking.js
+
 .DS_Store
 *.log

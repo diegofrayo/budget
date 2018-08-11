@@ -25,13 +25,19 @@ const Container = createStyledComponent(
     padding: 0 ${theme.spacing.medium}px;
     z-index: 100;
 
-    .main-menu-icon{
-      color: white;
+    .button {
       cursor: pointer;
-      font-size: 28px;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+    }
+
+    .main-menu-icon {
+      color: white;
+      font-size: ${theme.fontSize.xlarge * 1.5}px;
       left: 20px;
       position: absolute;
-      top: 22px;
+      top: 18px;
     }
 
     .link {
@@ -39,14 +45,17 @@ const Container = createStyledComponent(
     }
 
     .app-icon {
-      font-size: 2em;
+      font-size: ${theme.fontSize.xlarge * 1.5}px;
     }
 
     ${theme.mediaQueries.mobile.css} {
-      min-height: ${theme.headerHeight - 20};
+      min-height: ${theme.headerHeight - 20}px;
 
-      .app-icon {
-        font-size: 1.5em;
+      .material-icons {
+        font-size: ${theme.fontSize.xlarge}px;
+      }
+
+      .main-menu-icon {
         left: 10px;
         top: 14px;
       }
@@ -67,17 +76,14 @@ const Header = () => (
   >
     {(state, setState, events) => (
       <Container>
-        <i
-          className="material-icons main-menu-icon"
-          role="button"
-          tabIndex="0"
-          onClick={events.onClickOpenMenu(setState)}
-        >
-          menu
-        </i>
+        <button className="button" onClick={events.onClickOpenMenu(setState)}>
+          <i className="material-icons main-menu-icon">menu</i>
+        </button>
+
         <Link to={routes.HOME} className="link">
           <i className="material-icons app-icon">monetization_on</i>
         </Link>
+
         <MainMenu
           isMenuOpen={state.isMenuOpen}
           onClickOpenMenu={events.onClickOpenMenu(setState)}

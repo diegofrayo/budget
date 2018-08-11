@@ -1,10 +1,20 @@
 {
-	"development": {
-		"dest_path": "./build",
-		"environment": "development"
-	},
-	"production": {
-		"dest_path": "./build",
-		"environment": "production"
-	}
+  "development": {
+    "app_name": "budget",
+    "assets_path": "",
+    "dest_path": "./build",
+    "environment": "development",
+    "firebase_api_key": "",
+    "firebase_auth_domain": "",
+    "firebase_database_url": ""
+  },
+  "production": {
+    "app_name": "budget",
+    "assets_path": "/assets",
+    "dest_path": "./build",
+    "environment": "production",
+    "firebase_api_key": "",
+    "firebase_auth_domain": "",
+    "firebase_database_url": ""
+  }
 }
