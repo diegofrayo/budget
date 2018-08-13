@@ -2,15 +2,19 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-if (firebase && (firebase.apps === undefined || (firebase.apps && firebase.apps.length === 0))) {
-  firebase.initializeApp({
-    databaseURL: APP_SETTINGS.firebase_database_url,
-    authDomain: APP_SETTINGS.firebase_auth_domain,
-    apiKey: APP_SETTINGS.firebase_api_key,
-  });
-}
+let connection;
 
-export const connection = firebase.database().ref();
+export const initConnection = () => {
+  if (firebase && (firebase.apps === undefined || (firebase.apps && firebase.apps.length === 0))) {
+    firebase.initializeApp({
+      databaseURL: APP_SETTINGS.firebase_database_url,
+      authDomain: APP_SETTINGS.firebase_auth_domain,
+      apiKey: APP_SETTINGS.firebase_api_key,
+    });
+  }
+
+  connection = firebase.database().ref();
+};
 
 export const createTransaction = ({
   title = '',

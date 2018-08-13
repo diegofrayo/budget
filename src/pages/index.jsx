@@ -15,7 +15,7 @@ import { Router, history } from 'routing';
 // theme
 import { createPlainStylesObject, theme as appTheme } from 'styles/createStylesheet';
 
-const styles = createPlainStylesObject(theme => ({
+const styles = createPlainStylesObject(() => ({
   container: {
     backgroundColor: 'white',
     display: 'flex',
@@ -28,7 +28,6 @@ const styles = createPlainStylesObject(theme => ({
     color: 'black',
     flex: 1,
     overflow: 'auto',
-    padding: `${theme.spacing.xlarge}px ${theme.spacing.large}px`,
   },
 }));
 

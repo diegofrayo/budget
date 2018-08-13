@@ -1,12 +1,14 @@
 // npm libs
 import React from 'react';
 
-class Summary extends React.Component {
+// components
+import PageContainer from 'components/layout/PageContainer';
 
+class Summary extends React.Component {
   state = {};
 
   render() {
-    return <section>Summary page</section>;
+    return <PageContainer>Summary page</PageContainer>;
   }
 }
 

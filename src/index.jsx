@@ -11,6 +11,7 @@ import 'styles/mainTheme';
 
 // tracking
 import 'services/tracking';
+import { initConnection } from 'services/firebase';
 
 const styles = createPlainStylesObject(() => ({
   'background-color': 'white',
@@ -29,6 +30,7 @@ target.setAttribute(
 
 document.body.appendChild(target);
 ReactDOM.render(<Root />, target);
+initConnection();
 
 if (module.hot) {
   module.hot.accept('./pages/index.jsx', () => {

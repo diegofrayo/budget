@@ -10,5 +10,6 @@ export default createStyledComponent(
     justify-content: center;
     margin: 0 auto;
     max-width: ${theme.maxWidthContainer}px;
+    padding: ${theme.spacing.xlarge}px ${theme.spacing.large}px;
   `
 );

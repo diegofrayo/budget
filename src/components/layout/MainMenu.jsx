@@ -89,6 +89,10 @@ const menuItems = [
     name: 'Summary',
     route: routes.SUMMARY,
   },
+  {
+    name: 'Login',
+    route: routes.LOGIN,
+  },
 ];
 
 const MainMenu = props => [
