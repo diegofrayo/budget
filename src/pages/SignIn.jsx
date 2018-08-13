@@ -2,6 +2,6 @@
 import withRouter from 'react-router-dom/withRouter';
 
 // components
-import Login from 'components/pages/login';
+import SignIn from 'components/pages/SignIn';
 
-export default withRouter(Login);
+export default withRouter(SignIn);

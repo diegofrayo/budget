@@ -1,12 +1,13 @@
 // theme
-import { createStyledComponent } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles/createStylesheet';
 
-export default createStyledComponent(
+export default createStyledComponentWithProps(
   'section',
-  theme => `
+  ({ theme, fullHeight }) => `
     align-items: center;
     display: flex;
     flex-direction: column;
+    height: ${fullHeight ? '100%' : 'auto'};
     justify-content: center;
     margin: 0 auto;
     max-width: ${theme.maxWidthContainer}px;

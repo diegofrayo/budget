@@ -28,9 +28,9 @@ target.setAttribute(
     .join(';')
 );
 
+initConnection();
 document.body.appendChild(target);
 ReactDOM.render(<Root />, target);
-initConnection();
 
 if (module.hot) {
   module.hot.accept('./pages/index.jsx', () => {

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // services
-import { logIn } from 'services/auth';
+import { signIn } from 'services/auth';
 import { createCustomError } from 'services/utilities';
 
 // components
@@ -12,28 +12,28 @@ import PageContainer from 'components/layout/PageContainer';
 // form config
 const formConfig = {
   email: {
+    defaultValue: 'diegofrayo@gmail.com',
     element: 'input',
     errorMessage: 'Please type a valid email',
-    inputProps: {},
     label: 'Email',
     required: true,
-    type: 'email',
+    inputProps: { type: 'email' },
     uiProps: {
-      disableRequiredPoint: true,
+      disableRequiredAsterisk: true,
     },
     validate: value => {
       return value || false;
     },
   },
   password: {
+    defaultValue: '',
     element: 'input',
     errorMessage: 'Please type a valid password',
-    inputProps: {},
     label: 'Password',
     required: true,
-    type: 'password',
+    inputProps: { type: 'password' },
     uiProps: {
-      disableRequiredPoint: true,
+      disableRequiredAsterisk: true,
     },
     validate: value => {
       return value || false;
@@ -41,27 +41,17 @@ const formConfig = {
   },
 };
 
-class Login extends React.Component {
+class SignIn extends React.Component {
   onSubmit = formValues => {
-    return logIn(formValues)
-      .then(response => {
-        console.log('SUCCESS', response);
-        return {
-          type: 'success',
-          message: 'Log in successfully...',
+    return signIn(formValues).catch(() => {
+      return Promise.reject(
+        createCustomError({
+          type: 'error',
+          message: 'Email/Password are wrong',
           showResponseMessage: true,
-        };
-      })
-      .catch(error => {
-        console.log('ERROR', error);
-        return Promise.reject(
-          createCustomError({
-            type: 'error',
-            message: 'Email/Password are wrong',
-            showResponseMessage: true,
-          })
-        );
-      });
+        })
+      );
+    });
   };
 
   render() {
@@ -78,4 +68,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default SignIn;

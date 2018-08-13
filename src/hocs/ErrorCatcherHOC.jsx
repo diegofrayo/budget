@@ -30,7 +30,7 @@ const Text = createStyledComponent(
   `
 );
 
-class ErrorBoundary extends React.Component {
+class ErrorHOC extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
   };
@@ -57,9 +57,7 @@ class ErrorBoundary extends React.Component {
         <PageContainer>
           <Image src={`${APP_SETTINGS.assets_path}/images/monkey.png`} alt="monkey" />
           <Text>
-            Hi there,
-            I'm sorry,
-            I will fix it
+            Hi there, I'm sorry, I will fix it
             <br />
             Someday...
           </Text>
@@ -70,4 +68,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default ErrorBoundary;
+export default ErrorHOC;

@@ -7,7 +7,7 @@ import { ThemeProvider } from 'emotion-theming';
 
 // components
 import Header from 'components/layout/Header';
-import ErrorBoundary from 'hocs/ErrorBoundary';
+import ErrorCatcherHOC from 'hocs/ErrorCatcherHOC';
 
 // Routing
 import { Router, history } from 'routing';
@@ -34,7 +34,9 @@ const styles = createPlainStylesObject(() => ({
 const App = ({ body, header }) => (
   <section style={styles.container}>
     {header()}
-    <ErrorBoundary>{() => <section style={styles.bodyContainer}>{body()}</section>}</ErrorBoundary>
+    <ErrorCatcherHOC>
+      {() => <section style={styles.bodyContainer}>{body()}</section>}
+    </ErrorCatcherHOC>
   </section>
 );
 

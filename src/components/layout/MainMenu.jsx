@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // routing
 import { goTo, routes } from 'routing';
 
+// session
+import { getUserSession, signOut } from 'services/auth';
+
 // theme
 import { createStyledComponentWithProps } from 'styles/createStylesheet';
 
@@ -51,7 +54,6 @@ const MenuContainer = createStyledComponentWithProps(
       color: black;
       cursor: default;
       font-size: ${theme.fontSize.xlarge}px;
-      font-weight: 700;
       margin-bottom: ${theme.spacing.base}px;
       padding: ${theme.spacing.large}px ${theme.spacing.base}px;
       text-align: center;
@@ -80,7 +82,7 @@ const onClickMenuItem = (onClickOpenMenu, route) => () => {
   onClickOpenMenu();
 };
 
-const menuItems = [
+const MENU_ITEMS = [
   {
     name: 'Home',
     route: routes.HOME,
@@ -90,31 +92,53 @@ const menuItems = [
     route: routes.SUMMARY,
   },
   {
-    name: 'Login',
-    route: routes.LOGIN,
+    name: 'Sign In',
+    route: routes.SIGN_IN,
+  },
+  {
+    name: 'Sign Out',
+    onClick: onClickOpenMenu => () => {
+      onClickOpenMenu();
+      signOut();
+    },
   },
 ];
 
-const MainMenu = props => [
-  <Backdrop key="backdrop" onClick={props.onClickOpenMenu} visible={props.isMenuOpen === true}>
-    {''}
-  </Backdrop>,
-  <MenuContainer key="menu-container" visible={props.isMenuOpen === true}>
-    <ul className="menu">
-      <li className="menu-header">
-        <i className="material-icons icon">monetization_on</i>
-        <span>{APP_SETTINGS.app_name}</span>
-      </li>
-      {menuItems.map(item => (
-        <li key={`menu-item-${item.route}`} className="menu-item">
-          <button className="button" onClick={onClickMenuItem(props.onClickOpenMenu, item.route)}>
-            {item.name}
-          </button>
+const MainMenu = ({ onClickOpenMenu, isMenuOpen }) => {
+  const userSession = getUserSession();
+  const menuItems = userSession.isGuest
+    ? MENU_ITEMS.filter((item, index) => index !== 3)
+    : MENU_ITEMS.filter((item, index) => index !== 2);
+
+  return [
+    <Backdrop key="backdrop" onClick={onClickOpenMenu} visible={isMenuOpen === true}>
+      {''}
+    </Backdrop>,
+    <MenuContainer key="menu-container" visible={isMenuOpen === true}>
+      <ul className="menu">
+        <li className="menu-header">
+          <i className="material-icons icon">person</i>
+          <span>
+            Hello <strong>{getUserSession().username}</strong>
+          </span>
         </li>
-      ))}
-    </ul>
-  </MenuContainer>,
-];
+        {menuItems.map(item => (
+          <li key={`menu-item-${item.route}`} className="menu-item">
+            <button
+              className="button"
+              onClick={
+                (item.onClick && item.onClick(onClickOpenMenu)) ||
+                onClickMenuItem(onClickOpenMenu, item.route)
+              }
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </MenuContainer>,
+  ];
+};
 
 MainMenu.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,

@@ -7,6 +7,10 @@ class Component extends React.Component {
     this.setState({ ...this.props.state });
   }
 
+  componentDidMount() {
+    this.props.componentDidMount(this.setState.bind(this), this.state);
+  }
+
   render() {
     if (this.state === null) return null;
     const { children, events, properties } = this.props;
@@ -16,6 +20,7 @@ class Component extends React.Component {
 
 Component.propTypes = {
   children: PropTypes.func.isRequired,
+  componentDidMount: PropTypes.func,
   events: PropTypes.object,
   properties: PropTypes.object,
   state: PropTypes.object,
@@ -25,6 +30,7 @@ Component.defaultProps = {
   events: {},
   properties: {},
   state: {},
+  componentDidMount: () => {},
 };
 
 export default Component;

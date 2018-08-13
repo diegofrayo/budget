@@ -2,6 +2,6 @@ export const createTransaction = () => {
   return Promise.resolve();
 };
 
-export const login = () => {
+export const signIn = () => {
   return Promise.resolve();
 };

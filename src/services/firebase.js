@@ -2,6 +2,9 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
+// session
+import { getUserSession } from 'services/auth';
+
 let connection;
 
 export const initConnection = () => {
@@ -25,7 +28,7 @@ export const createTransaction = ({
 }) => {
   const [year, month, day] = date.split('-');
   return connection
-    .child(`budget/diegofrayo/transactions/${year}/${month}/${day}`)
+    .child(`budget/${getUserSession().username}/transactions/${year}/${month}/${day}`)
     .push()
     .set({
       title,
@@ -355,4 +358,19 @@ export const FIREBASE_CONNECTION = {
     playlist: username => `player/${username}/playlist`
   }
 };
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 */

@@ -81,6 +81,7 @@ class Form extends React.Component {
         show: true,
       },
     });
+
     setTimeout(() => this.setState({ responseMessage: Form.initialState }), 5000);
   };
 
@@ -121,7 +122,7 @@ class Form extends React.Component {
                     error={errorMessage}
                     required={
                       inputConfig.required &&
-                      (!inputConfig.uiProps || !inputConfig.uiProps.disableRequiredPoint)
+                      (!inputConfig.uiProps || !inputConfig.uiProps.disableRequiredAsterisk)
                     }
                   >
                     {inputConfig.label && <span className="label-text">{inputConfig.label}</span>}
