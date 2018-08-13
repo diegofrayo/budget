@@ -12,7 +12,7 @@ import PageContainer from 'components/layout/PageContainer';
 // form config
 const formConfig = {
   email: {
-    defaultValue: 'diegofrayo@gmail.com',
+    // defaultValue: 'diegofrayo@gmail.com',
     element: 'input',
     errorMessage: 'Please type a valid email',
     label: 'Email',
@@ -26,7 +26,7 @@ const formConfig = {
     },
   },
   password: {
-    defaultValue: '',
+    // defaultValue: '',
     element: 'input',
     errorMessage: 'Please type a valid password',
     label: 'Password',
@@ -43,15 +43,23 @@ const formConfig = {
 
 class SignIn extends React.Component {
   onSubmit = formValues => {
-    return signIn(formValues).catch(() => {
-      return Promise.reject(
-        createCustomError({
-          type: 'error',
-          message: 'Email/Password are wrong',
+    return signIn(formValues)
+      .then(() => {
+        return {
+          type: 'success',
+          message: 'Sign in successfully',
           showResponseMessage: true,
-        })
-      );
-    });
+        };
+      })
+      .catch(() => {
+        return Promise.reject(
+          createCustomError({
+            type: 'error',
+            message: 'Email/Password are wrong',
+            showResponseMessage: true,
+          })
+        );
+      });
   };
 
   render() {

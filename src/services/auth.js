@@ -13,7 +13,7 @@ export const signUp = ({ email, password }) => {
 };
 
 export function signOut() {
-  firebase.auth().signOut();
+  return firebase.auth().signOut();
 }
 
 export const onAuthStateChanged = handler => {

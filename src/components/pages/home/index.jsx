@@ -34,6 +34,7 @@ class Home extends React.Component {
   };
 
   render() {
+    // throw new Error('Error Catcher tests');
     return (
       <PageContainer>
         <Form

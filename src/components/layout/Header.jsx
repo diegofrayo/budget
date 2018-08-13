@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 // components
 import MainMenu from 'components/layout/MainMenu';
+import EmptyButton from 'components/common/EmptyButton';
 import ReactComponent from 'lib/Component';
 
 // routing
@@ -24,13 +25,6 @@ const Container = createStyledComponent(
     min-height: ${theme.headerHeight}px;
     padding: 0 ${theme.spacing.medium}px;
     z-index: 100;
-
-    .button {
-      cursor: pointer;
-      background-color: transparent;
-      border: 0;
-      outline: 0;
-    }
 
     .main-menu-icon {
       color: white;
@@ -74,11 +68,11 @@ const Header = () => (
       },
     }}
   >
-    {(state, setState, events) => (
+    {(state, setState, props, events) => (
       <Container>
-        <button className="button" onClick={events.onClickOpenMenu(setState)}>
+        <EmptyButton className="button" onClick={events.onClickOpenMenu(setState)}>
           <i className="material-icons main-menu-icon">menu</i>
-        </button>
+        </EmptyButton>
 
         <Link to={routes.HOME} className="link">
           <i className="material-icons app-icon">monetization_on</i>

@@ -6,6 +6,7 @@ import Dropdown from './components/Dropdown';
 
 export default {
   title: {
+    defaultValue: 'Title',
     element: 'input',
     errorMessage: 'Please type a valid title',
     label: 'Title',
@@ -20,7 +21,7 @@ export default {
     errorMessage: 'Please type a valid description',
     label: 'Description',
     required: false,
-    inputProps: { type: 'text' },
+    inputProps: {},
     validate: value => {
       return value || false;
     },
@@ -63,11 +64,11 @@ export default {
     inputProps: {
       type: 'select',
       options: [
-        { label: 'Paseos', value: 'paseos' },
-        { label: 'Entretenimiento', value: 'entretenimiento' },
-        { label: 'Deporte', value: 'deporte' },
         { label: 'Comida', value: 'comida' },
+        { label: 'Deporte', value: 'deporte' },
+        { label: 'Entretenimiento', value: 'entretenimiento' },
         { label: 'Hogar', value: 'hogar' },
+        { label: 'Paseos', value: 'paseos' },
       ],
     },
     validate: value => {

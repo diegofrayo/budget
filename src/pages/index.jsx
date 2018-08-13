@@ -27,6 +27,7 @@ const styles = createPlainStylesObject(() => ({
     backgroundColor: 'white',
     color: 'black',
     flex: 1,
+    maxHeight: '100%',
     overflow: 'auto',
   },
 }));
@@ -34,9 +35,9 @@ const styles = createPlainStylesObject(() => ({
 const App = ({ body, header }) => (
   <section style={styles.container}>
     {header()}
-    <ErrorCatcherHOC>
-      {() => <section style={styles.bodyContainer}>{body()}</section>}
-    </ErrorCatcherHOC>
+    <section style={styles.bodyContainer} id="body-page-container">
+      <ErrorCatcherHOC>{() => body()}</ErrorCatcherHOC>
+    </section>
   </section>
 );
 

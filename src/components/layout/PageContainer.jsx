@@ -1,7 +1,11 @@
+// npm libs
+import React from 'react';
+import PropTypes from 'prop-types';
+
 // theme
 import { createStyledComponentWithProps } from 'styles/createStylesheet';
 
-export default createStyledComponentWithProps(
+const Container = createStyledComponentWithProps(
   'section',
   ({ theme, fullHeight }) => `
     align-items: center;
@@ -14,3 +18,16 @@ export default createStyledComponentWithProps(
     padding: ${theme.spacing.xlarge}px ${theme.spacing.large}px;
   `
 );
+
+const PageContainer = ({ children, fullHeight }) => <Container fullHeight={fullHeight}>{children}</Container>;
+
+PageContainer.propTypes = {
+  children: PropTypes.any.isRequired,
+  fullHeight: PropTypes.bool,
+};
+
+PageContainer.defaultProps = {
+  fullHeight: false,
+};
+
+export default PageContainer;

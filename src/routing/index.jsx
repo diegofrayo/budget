@@ -9,7 +9,6 @@ import { onAuthStateChanged, updateUserSession } from 'services/auth';
 
 // components
 import ReactComponent from 'lib/Component';
-import PageContainer from 'components/layout/PageContainer';
 
 // pages
 import Home from 'pages/Home';
@@ -37,14 +36,26 @@ const Router = () => (
       authState: 'LOADING',
       isGuest: true,
     }}
-    componentDidMount={setState => {
+    componentDidMount={(setState, getState) => {
       onAuthStateChanged(user => {
         console.log('onAuthStateChanged', user);
+        const state = getState();
+
         if (user) {
           setState({ isGuest: false, authState: 'LOGGED_IN' });
           updateUserSession({ isGuest: false, username: 'diegofrayo' });
         } else {
-          setState({ isGuest: true, authState: 'NOT_LOGGED_IN' });
+          // close session
+          if (state.isGuest === false) {
+            setState({ isGuest: true, authState: 'LOADING' });
+            setTimeout(() => {
+              goTo(routes.SIGN_IN);
+              setState({ isGuest: true, authState: 'NOT_LOGGED_IN' });
+            }, 1500);
+          } else {
+            setState({ isGuest: true, authState: 'NOT_LOGGED_IN' });
+          }
+
           updateUserSession({ isGuest: true, username: 'guest' });
         }
       });
@@ -53,18 +64,24 @@ const Router = () => (
     {state => {
       console.log('render AuthHOC', state);
 
-      if (state.authState === 'LOADING') {
-        return (
-          <PageContainer fullHeight>
-            <img src={`${APP_SETTINGS.assets_path}/images/loader.svg`} alt="loader" />
-          </PageContainer>
-        );
-      }
-
       return (
         <Switch>
-          <Route exact path={routes.HOME} component={AuthHOC({ component: Home })} />
-          <Route exact path={routes.SUMMARY} component={AuthHOC({ component: Summary })} />
+          <Route
+            exact
+            path={routes.HOME}
+            component={AuthHOC({
+              component: Home,
+              status: state.authState,
+            })}
+          />
+          <Route
+            exact
+            path={routes.SUMMARY}
+            component={AuthHOC({
+              component: Summary,
+              status: state.authState,
+            })}
+          />
           <Route
             exact
             path={routes.SIGN_IN}
@@ -72,6 +89,7 @@ const Router = () => (
               component: SignIn,
               isGuest: state.isGuest,
               isGuestRequired: true,
+              status: state.authState,
             })}
           />
         </Switch>

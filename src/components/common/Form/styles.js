@@ -4,7 +4,7 @@ import { createStyledComponent, createStyledComponentWithProps } from 'styles/cr
 const FormContainer = createStyledComponent(
   'section',
   theme => `
-    border-radius: 10px;
+    border-radius: 10px 0 10px 0;
     box-shadow: ${theme.shadow.base('gray')};
     overflow: hidden;
     width: 100%;
@@ -70,7 +70,7 @@ const Label = createStyledComponentWithProps(
       `}
     }
 
-    .input {
+    .input-element {
       background-color: #f3f3f3;
       border-radius: 5px;
       border: 1px solid #dedede;
@@ -88,10 +88,8 @@ const Label = createStyledComponentWithProps(
     }
 
     .textarea {
-      max-height: 150px;
-      max-width: 100%;
-      min-height: 100px;
-      min-width: 100%;
+      height: 150px;
+      resize: none;
     }
 
     .error-message {
@@ -108,7 +106,7 @@ const Label = createStyledComponentWithProps(
         ? `
       color: #bd0d0d;
 
-      .input {
+      .input-element {
         background-color: #fff4f4;
         border-radius: 0;
         border: 1px solid #ffb8b8;
@@ -126,64 +124,4 @@ const Label = createStyledComponentWithProps(
   `
 );
 
-const ResponseMessage = createStyledComponentWithProps(
-  'section',
-  ({ theme, type, show }) => `
-    border-radius: 5px;
-    display: ${show === true ? 'flex' : 'none'};
-    font-weight: bold;
-    margin-top: ${theme.spacing.xlarge}px;
-    padding: ${theme.spacing.medium}px;
-    width: 100%;
-
-    ${
-      type === 'success'
-        ? `
-      color: #66a20a;
-      background-color: #ebffe2;
-      border: 1px solid #cbefc0;
-    `
-        : ''
-    }
-
-    ${
-      type === 'error'
-        ? `
-      color: #bd0d0d;
-      background-color: #ffebeb;
-      border: 1px solid #ffd1d1;
-    `
-        : ''
-    }
-  `
-);
-
-const Button = createStyledComponentWithProps(
-  'button',
-  ({ theme, disabled }) => `
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    font-size: ${theme.fontSize.normal}px;
-    font-weight: bold;
-    height: 50px;
-    padding: ${theme.spacing.small}px;
-    text-align: center;
-    text-transform: uppercase;
-    transition: all 0.3s linear;
-    width: 100%;
-
-    &:hover {
-      background-color: #333333;
-    }
-
-    ${disabled &&
-      `
-      background-color: gainsboro !important;
-      color: #6d6d6d;
-      cursor: not-allowed;
-    `}
-  `
-);
-
-export { FormContainer, Title, Form, Label, ResponseMessage, Button };
+export { FormContainer, Title, Form, Label };

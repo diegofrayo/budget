@@ -3,18 +3,16 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+// components
+import Button from 'components/common/Button';
+import ResponseMessage from 'components/common/ResponseMessage';
+
 // styles
-import {
-  FormContainer,
-  Title,
-  Form as FormElement,
-  Label,
-  ResponseMessage,
-  Button,
-} from './styles';
+import { FormContainer, Title, Form as FormElement, Label } from './styles';
 
 class Form extends React.Component {
   static initialState = {
+    status: 'NORMAL', // 'NORMAL', 'LOADING'
     formErrors: {
       valid: false,
       messages: {},
@@ -27,21 +25,30 @@ class Form extends React.Component {
     formValues: {},
   };
 
-  state = Form.initialState;
+  state = { ...Form.initialState };
 
   componentDidMount() {
     this.setDefaultFormValues();
   }
 
+  componentWillUnmount() {
+    this.isComponentUnmounted = true;
+  }
+
   onSubmit = event => {
     event.preventDefault();
+    this.setState({ status: 'LOADING' });
     this.props
       .onSubmit(this.state.formValues)
       .then(response => {
         this.showResponseMessage(response);
+        this.setState({ status: 'NORMAL' });
+        document.getElementById('body-page-container').scrollTop = 3000;
       })
       .catch(err => {
         if (err && err.data) this.showResponseMessage(err.data);
+        this.setState({ status: 'NORMAL' });
+        document.getElementById('body-page-container').scrollTop = 3000;
       });
   };
 
@@ -57,19 +64,30 @@ class Form extends React.Component {
         ...prevState,
         formValues,
         formErrors: this.validateForm(name, formValues, prevState.formErrors),
+        responseMessage: Form.initialState.responseMessage,
       };
     });
   };
 
   setDefaultFormValues = () => {
-    this.setState({
-      formValues: Object.entries(this.props.formConfig).reduce((acum, [inputName, inputConfig]) => {
+    const formValues = Object.entries(this.props.formConfig).reduce(
+      (acum, [inputName, inputConfig]) => {
         if (inputConfig.defaultValue) {
           acum[inputName] = inputConfig.defaultValue; // eslint-disable-line
         }
         return acum;
-      }, {}),
-    });
+      },
+      {}
+    );
+
+    this.setState(prevState => ({
+      formValues,
+      formErrors: this.validateForm('', formValues, prevState.formErrors),
+    }));
+  };
+
+  closeResponseMessageHandler = () => {
+    this.setState({ responseMessage: Form.initialState.responseMessage });
   };
 
   showResponseMessage = responseMessage => {
@@ -82,7 +100,9 @@ class Form extends React.Component {
       },
     });
 
-    setTimeout(() => this.setState({ responseMessage: Form.initialState }), 5000);
+    setTimeout(() => {
+      if (this.isComponentUnmounted !== true) this.closeResponseMessageHandler();
+    }, 5000);
   };
 
   validateForm = (inputNameParam, formValues, formErrors) => {
@@ -130,7 +150,11 @@ class Form extends React.Component {
                       id={inputName}
                       name={inputName}
                       value={this.state.formValues[inputName] || inputConfig.defaultValue || ''}
-                      className={classnames('input', inputConfig.inputProps.type)}
+                      className={classnames(
+                        'input-element',
+                        inputConfig.inputProps.type,
+                        inputConfig.element
+                      )}
                       onChange={this.onChangeInput}
                       {...inputConfig.inputProps}
                     />
@@ -140,13 +164,15 @@ class Form extends React.Component {
               })}
             </fieldset>
             <ResponseMessage
-              show={this.state.responseMessage.show}
-              type={this.state.responseMessage.type}
-            >
-              {this.state.responseMessage.message}
-            </ResponseMessage>
+              {...this.state.responseMessage}
+              closeResponseMessageHandler={this.closeResponseMessageHandler}
+            />
           </section>
-          <Button type="submit" disabled={this.state.formErrors.valid === false}>
+          <Button
+            disabled={this.state.formErrors.valid === false}
+            loading={this.state.status === 'LOADING'}
+            type="submit"
+          >
             {buttonText}
           </Button>
         </FormElement>

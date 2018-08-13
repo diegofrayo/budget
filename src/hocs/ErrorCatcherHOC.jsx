@@ -46,9 +46,7 @@ class ErrorHOC extends React.Component {
     console.log('Details:');
     console.log(details);
     console.groupEnd();
-    this.setState(() => ({
-      hasError: true,
-    }));
+    this.setState(() => ({ hasError: true }));
   }
 
   render() {
