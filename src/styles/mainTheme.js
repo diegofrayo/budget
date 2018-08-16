@@ -1,5 +1,7 @@
 import { injectGlobal } from 'emotion';
 
+const FONT_SIZE_BASE = 18;
+
 // eslint-disable-next-line
 injectGlobal`
 * {
@@ -18,7 +20,7 @@ body {
 
 body {
   font-family: 'Source Sans Pro', serif;
-  font-size: 18px;
+  font-size: ${FONT_SIZE_BASE}px;
 }
 
 p,

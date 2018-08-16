@@ -3,8 +3,9 @@ import chroma from 'chroma-js';
 import styled from 'react-emotion';
 import { css } from 'emotion';
 
-const FONT_SIZE_BASE = 18;
 const TONES = [100, 200, 300, 400, 500, 600, 700];
+const TABLET_MIN_WIDTH = 768;
+const DESKTOP_MIN_WIDTH = 1024;
 
 export const theme = {
   headerHeight: 70,
@@ -12,8 +13,24 @@ export const theme = {
 
   mediaQueries: {
     mobile: {
-      css: '@media screen and (max-width : 767px)',
-      js: '(max-width : 767px)',
+      css: `@media screen and (max-width : ${TABLET_MIN_WIDTH - 1}px)`,
+      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+    },
+    tablet: {
+      css: `@media (min-width: ${TABLET_MIN_WIDTH}px) and (max-width: ${DESKTOP_MIN_WIDTH - 1}px)`,
+      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+    },
+    desktop: {
+      css: `@media (min-width: ${DESKTOP_MIN_WIDTH}px)`,
+      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+    },
+    join: mediaQueries => {
+      return mediaQueries
+        .map((mq, index) => {
+          if (index === 0) return mq;
+          return mq.replace('@media', ',');
+        })
+        .join('');
     },
   },
 
@@ -28,12 +45,12 @@ export const theme = {
   },
 
   fontSize: {
-    normal: FONT_SIZE_BASE,
-    xsmall: FONT_SIZE_BASE - 4,
-    small: FONT_SIZE_BASE - 2,
-    medium: FONT_SIZE_BASE + 2,
-    large: FONT_SIZE_BASE + 4,
-    xlarge: FONT_SIZE_BASE + 6,
+    normal: '1em',
+    xsmall: '0.6em',
+    small: '0.8em',
+    medium: '1.2em',
+    large: '2em',
+    xlarge: '3em',
   },
 
   shadow: {
@@ -53,6 +70,10 @@ export const theme = {
 
 export const createClassname = fn => {
   return css(fn(theme));
+};
+
+export const createStyles = fn => {
+  return fn(theme);
 };
 
 export const createStyledComponent = (tagName, fn) => {

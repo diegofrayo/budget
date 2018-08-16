@@ -28,7 +28,7 @@ const Container = createStyledComponent(
 
     .main-menu-icon {
       color: white;
-      font-size: ${theme.fontSize.xlarge * 1.5}px;
+      font-size: ${theme.fontSize.xlarge};
       left: 20px;
       position: absolute;
       top: 18px;
@@ -39,14 +39,14 @@ const Container = createStyledComponent(
     }
 
     .app-icon {
-      font-size: ${theme.fontSize.xlarge * 1.5}px;
+      font-size: ${theme.fontSize.xlarge};
     }
 
     ${theme.mediaQueries.mobile.css} {
       min-height: ${theme.headerHeight - 20}px;
 
       .material-icons {
-        font-size: ${theme.fontSize.xlarge}px;
+        font-size: ${theme.fontSize.xlarge};
       }
 
       .main-menu-icon {

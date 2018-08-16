@@ -4,6 +4,7 @@ build/
 config.app.json
 package-lock.json
 src/services/tracking.js
+migration-script/data.js
 
 .DS_Store
 *.log

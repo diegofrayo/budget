@@ -22,7 +22,7 @@ const Text = createStyledComponent(
   'p',
   theme => `
     color: #bd0d0d;
-    font-size: ${theme.fontSize.large}px;
+    font-size: ${theme.fontSize.large};
     font-weight: bold;
     margin-top: ${theme.spacing.xlarge}px;
     text-align: center;

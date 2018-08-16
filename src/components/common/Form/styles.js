@@ -16,7 +16,7 @@ const Title = createStyledComponent(
   theme => `
     background-color: #4c5661;
     color: white;
-    font-size: ${theme.fontSize.xlarge}px;
+    font-size: ${theme.fontSize.xlarge};
     padding ${theme.spacing.base}px;
     text-align: center;
     text-transform: uppercase;
@@ -74,7 +74,7 @@ const Label = createStyledComponentWithProps(
       background-color: #f3f3f3;
       border-radius: 5px;
       border: 1px solid #dedede;
-      font-size: ${theme.fontSize.normal}px;
+      font-size: ${theme.fontSize.normal};
       height: 40px;
       outline: 0;
       padding:${theme.spacing.base}px;
@@ -94,7 +94,7 @@ const Label = createStyledComponentWithProps(
 
     .error-message {
       color: #bd0d0d;
-      font-size: ${theme.fontSize.small}px;
+      font-size: ${theme.fontSize.small};
       font-style: italic;
       font-weight: bold;
       padding: ${theme.spacing.xsmall}px ${theme.spacing.small}px;

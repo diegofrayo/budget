@@ -1,0 +1,21 @@
+{
+  "folders": [{
+    "path": "."
+  }],
+  "settings": {
+    "js_prettier": {
+      "auto_format_on_save": true,
+      "prettier_options": {
+        "printWidth": 120,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5"
+      }
+    },
+    "SublimeLinter.linters.eslint.disable": false,
+    "SublimeLinter.linters.stylelint.disable": false,
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true,
+    "save_on_focus_lost": true
+  }
+}

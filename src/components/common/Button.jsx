@@ -11,7 +11,7 @@ const ButtonElement = createStyledComponentWithProps(
     background-color: black;
     color: white;
     cursor: pointer;
-    font-size: ${theme.fontSize.normal}px;
+    font-size: ${theme.fontSize.normal};
     font-weight: bold;
     height: 50px;
     padding: ${theme.spacing.small}px;

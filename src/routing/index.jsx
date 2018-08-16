@@ -42,9 +42,11 @@ const Router = () => (
         const state = getState();
 
         if (user) {
-          setState({ isGuest: false, authState: 'LOGGED_IN' });
           updateUserSession({ isGuest: false, username: 'diegofrayo' });
+          setState({ isGuest: false, authState: 'LOGGED_IN' });
         } else {
+          updateUserSession({ isGuest: true, username: 'guest' });
+
           // close session
           if (state.isGuest === false) {
             setState({ isGuest: true, authState: 'LOADING' });
@@ -55,8 +57,6 @@ const Router = () => (
           } else {
             setState({ isGuest: true, authState: 'NOT_LOGGED_IN' });
           }
-
-          updateUserSession({ isGuest: true, username: 'guest' });
         }
       });
     }}

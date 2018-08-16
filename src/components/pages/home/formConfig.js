@@ -1,12 +1,15 @@
 // services
 import { getCurrentDate } from 'services/utilities';
 
+// constants
+import { CATEGORIES } from 'constants/index';
+
 // components
 import Dropdown from './components/Dropdown';
 
 export default {
   title: {
-    defaultValue: 'Title',
+    // defaultValue: 'Title',
     element: 'input',
     errorMessage: 'Please type a valid title',
     label: 'Title',
@@ -63,13 +66,7 @@ export default {
     required: true,
     inputProps: {
       type: 'select',
-      options: [
-        { label: 'Comida', value: 'comida' },
-        { label: 'Deporte', value: 'deporte' },
-        { label: 'Entretenimiento', value: 'entretenimiento' },
-        { label: 'Hogar', value: 'hogar' },
-        { label: 'Paseos', value: 'paseos' },
-      ],
+      options: Object.values(CATEGORIES),
     },
     validate: value => {
       return value || false;
