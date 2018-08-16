@@ -31,7 +31,7 @@ const Container = createStyledComponent(
       font-size: ${theme.fontSize.xlarge};
       left: 20px;
       position: absolute;
-      top: 18px;
+      top: 20px;
     }
 
     .link {
@@ -39,19 +39,15 @@ const Container = createStyledComponent(
     }
 
     .app-icon {
-      font-size: ${theme.fontSize.xlarge};
+      font-size: ${theme.fontSize.large};
     }
 
     ${theme.mediaQueries.mobile.css} {
       min-height: ${theme.headerHeight - 20}px;
 
-      .material-icons {
-        font-size: ${theme.fontSize.xlarge};
-      }
-
       .main-menu-icon {
         left: 10px;
-        top: 14px;
+        top: 10px;
       }
     }
   `

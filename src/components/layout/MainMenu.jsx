@@ -53,7 +53,7 @@ const MenuContainer = createStyledComponentWithProps(
       box-shadow: ${theme.shadow.base('gray')};
       color: black;
       cursor: default;
-      font-size: ${theme.fontSize.xlarge};
+      font-size: ${theme.fontSize.medium};
       margin-bottom: ${theme.spacing.base}px;
       padding: ${theme.spacing.large}px ${theme.spacing.base}px;
       text-align: center;

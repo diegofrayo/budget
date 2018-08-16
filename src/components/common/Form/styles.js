@@ -16,7 +16,7 @@ const Title = createStyledComponent(
   theme => `
     background-color: #4c5661;
     color: white;
-    font-size: ${theme.fontSize.xlarge};
+    font-size: ${theme.fontSize.large};
     padding ${theme.spacing.base}px;
     text-align: center;
     text-transform: uppercase;

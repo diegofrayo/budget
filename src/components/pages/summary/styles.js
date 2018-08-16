@@ -8,8 +8,9 @@ import {
 const Title = createStyledComponent(
   'h1',
   theme => `
-    font-size: ${theme.fontSize.xlarge};
+    font-size: ${theme.fontSize.large};
     margin-bottom: 1em;
+    text-transform: uppercase;
   `
 );
 
@@ -20,6 +21,7 @@ const TransactionsContainer = createStyledComponent(
     width: 100%;
 
     .date {
+      font-style: italic;
       margin-bottom: ${theme.spacing.small}px;
     }
 
@@ -47,23 +49,26 @@ const Transaction = createStyledComponent(
 
 const TransactionItemStyles = {
   title: createStyles(
-    () => `
-      width: 100%;
-  `
-  ),
-  category: createStyles(
     theme => `
-      width: 50%;
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      width: 60%;
 
-      ${theme.mediaQueries.mobile.css} {
-        width: 70%;
+      .text {
+        margin: ${theme.spacing.small}px ${theme.spacing.base}px;
+      }
+
+      .text-title {
+        font-weight: bold;
       }
   `
   ),
   amount: createStyles(
     theme => `
       justify-content: flex-end;
-      width: 50%;
+      width: 40%;
+      padding: 0 ${theme.spacing.base}px;
 
       .icon {
         color: #25b525;
@@ -75,10 +80,6 @@ const TransactionItemStyles = {
         font-size: ${theme.fontSize.xlarge};
         font-weight: bold;
       }
-
-      ${theme.mediaQueries.mobile.css} {
-        width: 30%;
-      }
   `
   ),
 };
@@ -88,7 +89,6 @@ const TransactionItem = createStyledComponentWithProps(
   ({ theme, item }) => `
     align-items: center;
     display: flex;
-    padding: ${theme.spacing.base}px ${theme.spacing.base}px 0;
 
     .icon {
       color: #4c4c4c;
@@ -99,6 +99,10 @@ const TransactionItem = createStyledComponentWithProps(
 
     .text {
       word-break: break-all;
+    }
+
+    ${theme.mediaQueries.mobile.css} {
+      width: 100%;
     }
 
     ${TransactionItemStyles[item] || ''}

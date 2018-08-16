@@ -13,3 +13,5 @@ export const CATEGORIES = {
   snacks: { label: 'Snacks', value: 'snacks' },
   transporte: { label: 'Transporte', value: 'transporte' },
 };
+
+export const OTHER = '';

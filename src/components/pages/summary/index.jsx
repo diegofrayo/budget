@@ -45,13 +45,10 @@ class Summary extends React.Component {
                   return (
                     <Transaction key={transaction.id}>
                       <TransactionItem item="title">
-                        <p className="text">
-                          <i className="material-icons icon">description</i>
+                        <p className="text text-title">
                           {transaction.title}
                         </p>
-                      </TransactionItem>
-                      <TransactionItem item="category">
-                        <p className="text">
+                        <p className="text text-category">
                           <i className="material-icons icon">folder</i>
                           {CATEGORIES[transaction.category].label}
                         </p>

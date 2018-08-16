@@ -73,4 +73,4 @@ Object.entries(dataTransformedOnObject).forEach(([date, transactions]) => {
   });
 });
 
-setTimeout(() => process.exit(), 5000);
+setTimeout(() => process.exit(), 10000);
