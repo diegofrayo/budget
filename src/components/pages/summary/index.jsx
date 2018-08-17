@@ -9,7 +9,7 @@ import Tabs from 'components/common/Tabs';
 import { fetchTransactions } from 'services/firebase';
 
 // constants
-import { CATEGORIES } from 'constants/index';
+import { CATEGORIES, DAYS } from 'constants/index';
 
 // styles
 import { TransactionsContainer, Transaction, TransactionItem } from './styles';
@@ -20,14 +20,20 @@ import DEFAULT_DATA from './data';
 class Summary extends React.Component {
   state = {
     transactions: DEFAULT_DATA,
+    // transactions: [],
   };
 
   componentDidMount() {
     // this.fetchTransactions();
   }
 
+  formatDate = dateStr => {
+    const date = new Date(dateStr);
+    return `${DAYS[date.getDay()]}, ${date.getDate()}`;
+  };
+
   fetchTransactions = () => {
-    return fetchTransactions('2018', '07').then(transactions => {
+    return fetchTransactions('2018', '08').then(transactions => {
       console.log(transactions);
       this.setState({ transactions });
     });
@@ -37,14 +43,18 @@ class Summary extends React.Component {
     return (
       <PageContainer>
         <Tabs
-          tabs={['Transactions', 'Summary']}
+          tabs={[
+            { key: 'transactions', text: 'Transactions' },
+            { key: 'summary', text: 'Summary' },
+          ]}
           panes={[
             {
+              key: 'transactions',
               render: () => {
                 return this.state.transactions.map(transactionsByDay => {
                   return (
                     <TransactionsContainer key={transactionsByDay.date}>
-                      <h2 className="date">{transactionsByDay.date}</h2>
+                      <p className="date">{this.formatDate(transactionsByDay.date)}</p>
                       <section className="transactions-container">
                         {transactionsByDay.transactions.map(transaction => {
                           return (
@@ -72,6 +82,7 @@ class Summary extends React.Component {
               },
             },
             {
+              key: 'summary',
               render: () => {
                 return <p>Summary</p>;
               },

@@ -62,8 +62,6 @@ const Router = () => (
     }}
   >
     {state => {
-      console.log('render AuthHOC', state);
-
       return (
         <Switch>
           <Route

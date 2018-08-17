@@ -28,14 +28,21 @@ class Tabs extends React.Component {
       <TabsContainer>
         <TabsHeader>
           {tabs.map((tab, index) => (
-            <Tab data-index={index} selected={index === selectedTabIndex} onClick={this.onClickTab}>
-              {tab}
+            <Tab
+              data-index={index}
+              key={tab.key}
+              selected={index === selectedTabIndex}
+              onClick={this.onClickTab}
+            >
+              {tab.text}
             </Tab>
           ))}
         </TabsHeader>
         <PanesContainer>
           {panes.map((pane, index) => (
-            <Pane show={index === selectedTabIndex}>{pane.render()}</Pane>
+            <Pane key={pane.key} show={index === selectedTabIndex}>
+              {pane.render()}
+            </Pane>
           ))}
         </PanesContainer>
       </TabsContainer>

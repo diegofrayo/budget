@@ -5,6 +5,9 @@ import React from 'react';
 import { signIn } from 'services/auth';
 import { createCustomError } from 'services/utilities';
 
+// libs
+import validator from 'lib/validator';
+
 // components
 import Form from 'components/common/Form';
 import PageContainer from 'components/layout/PageContainer';
@@ -22,7 +25,10 @@ const formConfig = {
       disableRequiredAsterisk: true,
     },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .string()
+        .email()
+        .exec();
     },
   },
   password: {
@@ -36,7 +42,10 @@ const formConfig = {
       disableRequiredAsterisk: true,
     },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .string()
+        .minLength(5)
+        .exec();
     },
   },
 };

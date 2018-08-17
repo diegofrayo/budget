@@ -12,3 +12,39 @@ export const getCurrentDate = () => {
     date.getMonth() + 1
   )}-${formatNumberLessThanZero(date.getDate())}`;
 };
+
+export const sort = (attr = '', order = 'asc') => {
+  let greater = 1;
+  let smaller = -1;
+
+  if (order === 'desc') {
+    greater = -1;
+    smaller = 1;
+  }
+
+  const sortFn = (a, b) => {
+    let aAttr = a[attr];
+    let bAttr = b[attr];
+
+    if (aAttr === undefined || aAttr === null) {
+      aAttr = '';
+    }
+
+    if (bAttr === undefined || bAttr === null) {
+      bAttr = '';
+    }
+
+    aAttr = aAttr.toLowerCase();
+    bAttr = bAttr.toLowerCase();
+
+    if (aAttr === bAttr) {
+      return 0;
+    } else if (aAttr > bAttr) {
+      return greater;
+    }
+
+    return smaller;
+  };
+
+  return sortFn;
+};

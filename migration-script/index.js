@@ -39,6 +39,8 @@ const dataTransformed = data.data
       category: item[2].toLowerCase().replace(' ', '_'),
       amount: item[3].replace(/\./g, '').replace('$', ''),
       description: '',
+      // category: 'category',
+      // title: 'Title',
     };
   })
   .sort(sortByDate);
@@ -67,10 +69,9 @@ firebase.initializeApp({
 const connection = firebase.database().ref();
 
 Object.entries(dataTransformedOnObject).forEach(([date, transactions]) => {
-  const conn = connection.child(`budget/diegofrayo/transactions/2018/${data.month}/${date}`);
-  transactions.forEach(transaction => {
-    conn.push().set(transaction);
-  });
+  const username = 'diegofrayo' || 'guest';
+  const conn = connection.child(`budget/${username}/transactions/2018/${data.month}/${date}`);
+  transactions.forEach(transaction => conn.push().set(transaction));
 });
 
 setTimeout(() => process.exit(), 10000);

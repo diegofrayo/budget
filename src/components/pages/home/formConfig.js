@@ -4,6 +4,9 @@ import { getCurrentDate } from 'services/utilities';
 // constants
 import { CATEGORIES } from 'constants/index';
 
+// libs
+import validator from 'lib/validator';
+
 // components
 import Dropdown from './components/Dropdown';
 
@@ -16,7 +19,10 @@ export default {
     required: true,
     inputProps: { type: 'text' },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .string()
+        .minLength(2)
+        .exec();
     },
   },
   description: {
@@ -25,9 +31,6 @@ export default {
     label: 'Description',
     required: false,
     inputProps: {},
-    validate: value => {
-      return value || false;
-    },
   },
   date: {
     defaultValue: getCurrentDate(),
@@ -39,7 +42,10 @@ export default {
       type: 'date',
     },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .string()
+        .regex(/(\d{4})-(\d{2})-(\d{2})/)
+        .exec();
     },
   },
   amount: {
@@ -54,7 +60,10 @@ export default {
       type: 'number',
     },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .number()
+        .min(1000)
+        .exec();
     },
   },
   category: {
@@ -69,7 +78,10 @@ export default {
       options: Object.values(CATEGORIES),
     },
     validate: value => {
-      return value || false;
+      return validator(value)
+        .string()
+        .notAllowEmpty()
+        .exec();
     },
   },
 };

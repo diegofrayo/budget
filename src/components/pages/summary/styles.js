@@ -8,12 +8,19 @@ import {
 const TransactionsContainer = createStyledComponent(
   'section',
   theme => `
-    margin-bottom: ${theme.spacing.xlarge * 1.5}px;
+    margin-bottom: ${theme.spacing.xlarge}px;
     width: 100%;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     .date {
-      font-style: italic;
-      margin-bottom: ${theme.spacing.small}px;
+      background-color: #eaeaea;
+      border: 1px solid #dedede;
+      font-weight: bold;
+      padding: ${theme.spacing.small}px ${theme.spacing.base}px;
+      text-transform: uppercase;
     }
 
     .transactions-container {
@@ -45,9 +52,10 @@ const TransactionItemStyles = {
       flex-direction: column;
       justify-content: center;
       width: 60%;
+      padding: ${theme.spacing.small}px ${theme.spacing.base}px;
 
       .text {
-        margin: ${theme.spacing.small}px ${theme.spacing.base}px;
+        margin: ${theme.spacing.small}px 0;
       }
 
       .text-title {
@@ -59,7 +67,7 @@ const TransactionItemStyles = {
     theme => `
       justify-content: flex-end;
       width: 40%;
-      padding: 0 ${theme.spacing.base}px;
+      padding: ${theme.spacing.base}px;
 
       .icon {
         color: #25b525;
@@ -68,7 +76,7 @@ const TransactionItemStyles = {
       }
 
       .text {
-        font-size: ${theme.fontSize.xlarge};
+        font-size: ${theme.fontSize.medium};
         font-weight: bold;
       }
   `
@@ -86,10 +94,6 @@ const TransactionItem = createStyledComponentWithProps(
       margin-right: ${theme.spacing.small}px;
       position: relative;
       top: -2px;
-    }
-
-    .text {
-      word-break: break-all;
     }
 
     ${theme.mediaQueries.mobile.css} {

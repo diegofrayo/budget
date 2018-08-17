@@ -2,8 +2,9 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-// session
+// services
 import { getUserSession } from 'services/auth';
+import { sort } from 'services/utilities';
 
 let connection;
 
@@ -45,17 +46,19 @@ export const fetchTransactions = (year, month) => {
     .once('value')
     .then(snapshot => {
       if (snapshot.exists()) {
-        return Object.entries(snapshot.val()).map(([date, transactionsByDay]) => {
-          return {
-            date: `${year}/${month}/${date}`,
-            transactions: Object.entries(transactionsByDay).map(([id, transaction]) => {
-              return {
-                id,
-                ...transaction,
-              };
-            }),
-          };
-        });
+        return Object.entries(snapshot.val())
+          .map(([date, transactionsByDay]) => {
+            return {
+              date: `${year}/${month}/${date}`,
+              transactions: Object.entries(transactionsByDay).map(([id, transaction]) => {
+                return {
+                  id,
+                  ...transaction,
+                };
+              }),
+            };
+          })
+          .sort(sort('date', 'asc'));
       }
 
       return [];

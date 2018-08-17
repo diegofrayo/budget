@@ -1,4 +1,5 @@
 export const CATEGORIES = {
+  category: { label: 'Category', value: 'category' }, // for guest users
   comidas: { label: 'Comidas', value: 'comidas' },
   compras_online: { label: 'Compras Online', value: 'compras_online' },
   educacion: { label: 'Educacion', value: 'educacion' },
@@ -30,3 +31,5 @@ export const MONTHS = [
   'November',
   'December',
 ];
+
+export const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

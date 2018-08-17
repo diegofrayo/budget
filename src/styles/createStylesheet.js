@@ -48,7 +48,7 @@ export const theme = {
     normal: '1em',
     xsmall: '0.6em',
     small: '0.8em',
-    medium: '1.2em',
+    medium: '1.5em',
     large: '2em',
     xlarge: '3em',
   },
