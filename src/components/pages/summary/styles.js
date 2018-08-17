@@ -5,15 +5,6 @@ import {
   createStyles,
 } from 'styles/createStylesheet';
 
-const Title = createStyledComponent(
-  'h1',
-  theme => `
-    font-size: ${theme.fontSize.large};
-    margin-bottom: 1em;
-    text-transform: uppercase;
-  `
-);
-
 const TransactionsContainer = createStyledComponent(
   'section',
   theme => `
@@ -109,4 +100,4 @@ const TransactionItem = createStyledComponentWithProps(
   `
 );
 
-export { Title, TransactionsContainer, Transaction, TransactionItem };
+export { TransactionsContainer, Transaction, TransactionItem };

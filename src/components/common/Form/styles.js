@@ -44,7 +44,7 @@ const Form = createStyledComponent(
 
 const Label = createStyledComponentWithProps(
   'label',
-  ({ error, required, theme }) => `
+  ({ theme, error, required }) => `
     cursor: pointer;
     margin-bottom: ${theme.spacing.xlarge}px;
     width: 100%;

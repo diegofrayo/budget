@@ -14,4 +14,19 @@ export const CATEGORIES = {
   transporte: { label: 'Transporte', value: 'transporte' },
 };
 
-export const OTHER = '';
+export const YEARS = [2017, 2018];
+
+export const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
