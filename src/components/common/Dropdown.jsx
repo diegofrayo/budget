@@ -17,7 +17,7 @@ const Select = ({ id, name, value, options, className, onChange }) => {
 };
 
 Select.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
@@ -25,6 +25,10 @@ Select.propTypes = {
     PropTypes.shape({ label: PropTypes.string.isRequired, value: PropTypes.string.isRequired })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
+};
+
+Select.defaultProps = {
+  className: '',
 };
 
 export default Select;

@@ -1,6 +1,6 @@
 const firebase = require('firebase');
 const fs = require('fs');
-const { JULY: data } = require('./data');
+const { AUGUST: data } = require('./data');
 
 // ------------------------ Utils Functions ------------------------
 
@@ -29,18 +29,16 @@ const sortByDate = (a, b) => {
 const dataTransformed = data.data
   .trim()
   .split('\n')
-  .map(string => {
-    return string.trim().split(',');
-  })
+  .map(string => string.trim().split(','))
   .map(item => {
     return {
       title: item[0],
-      date: transformDate(item[1]),
       category: item[2].toLowerCase().replace(' ', '_'),
-      amount: item[3].replace(/\./g, '').replace('$', ''),
+      date: transformDate(item[1]),
+      amount: Number(item[3].replace(/\./g, '').replace('$', '')),
       description: '',
-      // category: 'category',
       // title: 'Title',
+      // category: 'category',
     };
   })
   .sort(sortByDate);

@@ -49,6 +49,10 @@ const Container = createStyledComponent(
         left: 10px;
         top: 10px;
       }
+
+      .app-icon {
+        font-size: ${theme.fontSize.medium};
+      }
     }
   `
 );

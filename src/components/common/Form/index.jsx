@@ -1,14 +1,17 @@
 // npm libs
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 // components
 import Button from 'components/common/Button';
 import ResponseMessage from 'components/common/ResponseMessage';
+import FormElement from 'components/common/FormElement';
+
+// services
+import { resetScroll } from 'services/utilities';
 
 // styles
-import { FormContainer, Title, Form as FormElement, Label } from './styles';
+import { FormContainer, Title, Form as FormComponent } from './styles';
 
 class Form extends React.Component {
   static initialState = {
@@ -43,12 +46,12 @@ class Form extends React.Component {
       .then(response => {
         this.showResponseMessage(response);
         this.setState({ status: 'NORMAL' });
-        document.getElementById('body-page-container').scrollTop = 3000;
+        resetScroll(3000);
       })
       .catch(err => {
         if (err && err.data) this.showResponseMessage(err.data);
         this.setState({ status: 'NORMAL' });
-        document.getElementById('body-page-container').scrollTop = 3000;
+        resetScroll(3000);
       });
   };
 
@@ -128,38 +131,25 @@ class Form extends React.Component {
     return (
       <FormContainer>
         <Title>{title}</Title>
-        <FormElement onSubmit={this.onSubmit}>
+        <FormComponent onSubmit={this.onSubmit}>
           <section className="inputs-container">
             <fieldset className="fieldset">
               {Object.entries(formConfig).map(([inputName, inputConfig]) => {
-                const Element = inputConfig.component || inputConfig.element;
-                const errorMessage = this.state.formErrors.messages[inputName] || false;
-
                 return (
-                  <Label
+                  <FormElement
                     key={inputName}
-                    htmlFor={inputName}
-                    error={errorMessage}
-                    required={
-                      inputConfig.required &&
-                      (!inputConfig.uiProps || !inputConfig.uiProps.disableRequiredAsterisk)
-                    }
-                  >
-                    {inputConfig.label && <span className="label-text">{inputConfig.label}</span>}
-                    <Element
-                      id={inputName}
-                      name={inputName}
-                      value={this.state.formValues[inputName] || inputConfig.defaultValue || ''}
-                      className={classnames(
-                        'input-element',
-                        inputConfig.inputProps.type,
-                        inputConfig.element
-                      )}
-                      onChange={this.onChangeInput}
-                      {...inputConfig.inputProps}
-                    />
-                    {errorMessage && <p className="error-message">{errorMessage}</p>}
-                  </Label>
+                    label={inputConfig.label}
+                    name={inputName}
+                    required={inputConfig.required}
+                    defaultValue={inputConfig.defaultValue}
+                    value={this.state.formValues[inputName]}
+                    element={inputConfig.element}
+                    component={inputConfig.component}
+                    errorMessage={this.state.formErrors.messages[inputName]}
+                    uiProps={inputConfig.uiProps}
+                    inputProps={inputConfig.inputProps}
+                    onChangeInput={this.onChangeInput}
+                  />
                 );
               })}
             </fieldset>
@@ -175,7 +165,7 @@ class Form extends React.Component {
           >
             {buttonText}
           </Button>
-        </FormElement>
+        </FormComponent>
       </FormContainer>
     );
   }

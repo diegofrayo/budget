@@ -6,6 +6,7 @@ import createHistory from 'history/createBrowserHistory';
 
 // services
 import { onAuthStateChanged, updateUserSession } from 'services/auth';
+import { resetScroll } from 'services/utilities';
 
 // components
 import ReactComponent from 'lib/Component';
@@ -28,6 +29,7 @@ const routes = {
 
 const goTo = route => {
   history.push(route);
+  resetScroll();
 };
 
 const Router = () => (

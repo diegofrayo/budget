@@ -48,3 +48,9 @@ export const sort = (attr = '', order = 'asc') => {
 
   return sortFn;
 };
+
+export const createArray = length => Array.from(Array(length).keys()).map(value => value + 1);
+
+export const resetScroll = scrollTop => {
+  document.getElementById('body-page-container').scrollTop = scrollTop || 0;
+};

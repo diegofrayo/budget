@@ -8,7 +8,7 @@ import { CATEGORIES } from 'constants/index';
 import validator from 'lib/validator';
 
 // components
-import Dropdown from './components/Dropdown';
+import Dropdown from 'components/common/Dropdown';
 
 export default {
   title: {
@@ -21,10 +21,10 @@ export default {
     validate: value => {
       return validator(value)
         .string()
-        .minLength(2)
         .exec();
     },
   },
+  /*
   description: {
     element: 'textarea',
     errorMessage: 'Please type a valid description',
@@ -32,6 +32,7 @@ export default {
     required: false,
     inputProps: {},
   },
+  */
   date: {
     defaultValue: getCurrentDate(),
     element: 'input',

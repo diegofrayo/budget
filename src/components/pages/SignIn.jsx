@@ -21,9 +21,7 @@ const formConfig = {
     label: 'Email',
     required: true,
     inputProps: { type: 'email' },
-    uiProps: {
-      disableRequiredAsterisk: true,
-    },
+    uiProps: { disableRequiredAsterisk: true },
     validate: value => {
       return validator(value)
         .string()
@@ -38,9 +36,7 @@ const formConfig = {
     label: 'Password',
     required: true,
     inputProps: { type: 'password' },
-    uiProps: {
-      disableRequiredAsterisk: true,
-    },
+    uiProps: { disableRequiredAsterisk: true },
     validate: value => {
       return validator(value)
         .string()
