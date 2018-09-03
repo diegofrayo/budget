@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// services
+import { resetScroll } from 'services/utilities';
+
 // styles
 import { TabsContainer, TabsHeader, Tab, PanesContainer, Pane } from './styles';
 
@@ -18,6 +21,7 @@ class Tabs extends React.Component {
     this.setState({
       selectedTabIndex: Number(event.currentTarget.getAttribute('data-index')),
     });
+    resetScroll();
   };
 
   render() {
@@ -40,7 +44,7 @@ class Tabs extends React.Component {
         </TabsHeader>
         <PanesContainer>
           {panes.map((pane, index) => (
-            <Pane key={pane.key} show={index === selectedTabIndex}>
+            <Pane key={pane.key} show={index === selectedTabIndex} className={pane.className}>
               {pane.render()}
             </Pane>
           ))}

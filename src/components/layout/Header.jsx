@@ -11,7 +11,7 @@ import ReactComponent from 'lib/Component';
 import { routes } from 'routing';
 
 // theme
-import { createStyledComponent } from 'styles/createStylesheet';
+import { createStyledComponent } from 'styles';
 
 const Container = createStyledComponent(
   'header',
@@ -23,12 +23,12 @@ const Container = createStyledComponent(
     flex: 0;
     justify-content: center;
     min-height: ${theme.headerHeight}px;
-    padding: 0 ${theme.spacing.medium}px;
+    padding: 0 ${theme.spacing[3]};
     z-index: 100;
 
     .main-menu-icon {
       color: white;
-      font-size: ${theme.fontSize.xlarge};
+      font-size: ${theme.fontSize[6]};
       left: 20px;
       position: absolute;
       top: 20px;
@@ -39,7 +39,7 @@ const Container = createStyledComponent(
     }
 
     .app-icon {
-      font-size: ${theme.fontSize.large};
+      font-size: ${theme.fontSize[5]};
     }
 
     ${theme.mediaQueries.mobile.css} {
@@ -51,7 +51,7 @@ const Container = createStyledComponent(
       }
 
       .app-icon {
-        font-size: ${theme.fontSize.medium};
+        font-size: ${theme.fontSize[3]};
       }
     }
   `

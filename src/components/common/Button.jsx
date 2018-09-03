@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // theme
-import { createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles';
 
 const ButtonElement = createStyledComponentWithProps(
   'button',
@@ -11,10 +11,10 @@ const ButtonElement = createStyledComponentWithProps(
     background-color: black;
     color: white;
     cursor: pointer;
-    font-size: ${theme.fontSize.normal};
+    font-size: ${theme.fontSize[2]};
     font-weight: bold;
     height: 50px;
-    padding: ${theme.spacing.small}px;
+    padding: ${theme.spacing[1]};
     text-align: center;
     text-transform: uppercase;
     transition: all 0.3s linear;
@@ -25,7 +25,7 @@ const ButtonElement = createStyledComponentWithProps(
     }
 
     .loader {
-      margin-right: ${theme.spacing.small}px;
+      margin-right: ${theme.spacing[1]};
     }
 
     ${

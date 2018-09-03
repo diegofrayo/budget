@@ -13,7 +13,7 @@ import ErrorCatcherHOC from 'hocs/ErrorCatcherHOC';
 import { Router, history } from 'routing';
 
 // theme
-import { createPlainStylesObject, theme as appTheme } from 'styles/createStylesheet';
+import { createPlainStylesObject, theme as appTheme } from 'styles';
 
 const styles = createPlainStylesObject(() => ({
   container: {

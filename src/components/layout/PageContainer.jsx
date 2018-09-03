@@ -3,31 +3,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // theme
-import { createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles';
+
+// components
+import Box from 'components/common/Box';
 
 const Container = createStyledComponentWithProps(
-  'section',
-  ({ theme, fullHeight }) => `
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: ${fullHeight ? '100%' : 'auto'};
-    justify-content: center;
+  Box,
+  ({ theme }) => `
     margin: 0 auto;
     max-width: ${theme.maxWidthContainer}px;
-    padding: ${theme.spacing.xlarge}px ${theme.spacing.large}px;
+    padding: ${theme.spacing[4]} ${theme.spacing[3]};
   `
 );
 
-const PageContainer = ({ children, fullHeight }) => <Container fullHeight={fullHeight}>{children}</Container>;
+const PageContainer = ({ children, 'expand-y': expandY }) => (
+  <Container expand-y={expandY} column align="center">
+    {children}
+  </Container>
+);
 
 PageContainer.propTypes = {
   children: PropTypes.any.isRequired,
-  fullHeight: PropTypes.bool,
+  'expand-y': PropTypes.bool,
 };
 
 PageContainer.defaultProps = {
-  fullHeight: false,
+  'expand-y': false,
 };
 
 export default PageContainer;

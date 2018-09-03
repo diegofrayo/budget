@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 // theme
-import { createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles';
 
 const Container = createStyledComponentWithProps(
   'label',
   ({ theme, error, required }) => `
     cursor: pointer;
-    margin-bottom: ${theme.spacing.xlarge}px;
+    margin-bottom: ${theme.spacing[5]};
     width: 100%;
 
     &:last-child {
@@ -20,8 +20,8 @@ const Container = createStyledComponentWithProps(
     .label-text {
       display: block;
       font-weight: bold;
-      margin-bottom: ${theme.spacing.small}px;
-      padding-left: ${theme.spacing.small}px;
+      margin-bottom: ${theme.spacing[0]};
+      padding-left: ${theme.spacing[0]};
       text-transform: uppercase;
 
       ${required &&
@@ -29,7 +29,7 @@ const Container = createStyledComponentWithProps(
         &::after {
           color: red;
           content: '*';
-          margin-left: ${theme.spacing.small}px;
+          margin-left: ${theme.spacing[1]};
         }
       `}
     }
@@ -38,10 +38,10 @@ const Container = createStyledComponentWithProps(
       background-color: #f3f3f3;
       border-radius: 5px;
       border: 1px solid #dedede;
-      font-size: ${theme.fontSize.normal};
+      font-size: ${theme.fontSize[2]};
       height: 40px;
       outline: 0;
-      padding:${theme.spacing.base}px;
+      padding:${theme.spacing[0]};
       width: 100%;
 
       &:focus {
@@ -58,10 +58,10 @@ const Container = createStyledComponentWithProps(
 
     .error-message {
       color: #bd0d0d;
-      font-size: ${theme.fontSize.small};
+      font-size: ${theme.fontSize[1]};
       font-style: italic;
       font-weight: bold;
-      padding: ${theme.spacing.xsmall}px ${theme.spacing.small}px;
+      padding: ${theme.spacing[0]} ${theme.spacing[1]};
       text-align: right;
     }
 
@@ -127,8 +127,8 @@ FormElement.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  defaultValue: PropTypes.string,
-  value: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   element: PropTypes.string.isRequired,
   component: PropTypes.func,
   errorMessage: PropTypes.string,

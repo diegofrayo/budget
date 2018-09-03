@@ -12,7 +12,7 @@ const authHelper = ({ component: Component, isGuestRequired, isGuest, status }) 
   const AuthHOC = () => {
     if (status === 'LOADING') {
       return (
-        <PageContainer fullHeight>
+        <PageContainer expand-y>
           <img src={`${APP_SETTINGS.assets_path}/images/loader.svg`} alt="loader" />
         </PageContainer>
       );

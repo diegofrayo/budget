@@ -2,6 +2,7 @@
 import React from 'react';
 
 // components
+import Box from 'components/common/Box';
 import Dropdown from 'components/common/Dropdown';
 import FormElement from 'components/common/FormElement';
 import PageContainer from 'components/layout/PageContainer';
@@ -9,27 +10,37 @@ import Tabs from 'components/common/Tabs';
 
 // services
 import { fetchTransactions } from 'services/firebase';
-import { createArray, formatNumberLessThanZero } from 'services/utilities';
+import { createArray, formatNumberLessThanZero, sort } from 'services/utilities';
 
 // constants
 import { CATEGORIES, DAYS, YEARS, MONTHS } from 'constants/index';
 
 // styles
-import { TransactionsContainer, Transaction, TransactionItem } from './styles';
+import {
+  DropdownStyles,
+  PanesStyles,
+  TransactionsContainer,
+  Transaction,
+  TransactionItem,
+  TableContainer,
+  Table,
+} from './styles';
 
 // data
 import DEFAULT_DATA from './data';
 
 class Summary extends React.Component {
   state = {
-    // transactions: [],
     transactions: DEFAULT_DATA,
+    // transactions: { transactions: [], stats: {} },
     selectedYear: `${new Date().getFullYear()}`,
     selectedMonth: formatNumberLessThanZero(new Date().getMonth() + 1),
   };
 
   componentDidMount() {
-    // this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+    if (APP_SETTINGS.environment !== 'development') {
+      this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -74,31 +85,42 @@ class Summary extends React.Component {
   fetchTransactions = (year, month) => {
     return fetchTransactions(year, month).then(transactions => {
       console.log(transactions);
-      this.setState({ transactions });
+      this.setState({
+        transactions: {
+          stats: transactions.stats,
+          transactions: transactions.transactions.sort(sort('date', 'asc')),
+        },
+      });
     });
   };
 
   render() {
     return (
       <PageContainer>
-        <FormElement
-          label="Select a Year"
-          name="years"
-          value={this.state.selectedYear}
-          element="dropdown"
-          component={Dropdown}
-          inputProps={{ type: 'select', options: Object.values(YEARS) }}
-          onChangeInput={this.onChangeDropdown}
-        />
-        <FormElement
-          label="Select a Month"
-          name="months"
-          value={this.state.selectedMonth}
-          element="dropdown"
-          component={Dropdown}
-          inputProps={{ type: 'select', options: Object.values(MONTHS) }}
-          onChangeInput={this.onChangeDropdown}
-        />
+        <Box row expand-x>
+          <Box column w={['100%', '50%', '50%']} className={DropdownStyles.left}>
+            <FormElement
+              label="Select a Year"
+              name="years"
+              value={this.state.selectedYear}
+              element="dropdown"
+              component={Dropdown}
+              inputProps={{ type: 'select', options: Object.values(YEARS) }}
+              onChangeInput={this.onChangeDropdown}
+            />
+          </Box>
+          <Box column w={['100%', '50%', '50%']} className={DropdownStyles.right}>
+            <FormElement
+              label="Select a Month"
+              name="months"
+              value={this.state.selectedMonth}
+              element="dropdown"
+              component={Dropdown}
+              inputProps={{ type: 'select', options: Object.values(MONTHS) }}
+              onChangeInput={this.onChangeDropdown}
+            />
+          </Box>
+        </Box>
         <Tabs
           tabs={[
             { key: 'transactions', text: 'Transactions' },
@@ -107,8 +129,9 @@ class Summary extends React.Component {
           panes={[
             {
               key: 'transactions',
+              className: PanesStyles.transactions,
               render: () => {
-                return this.state.transactions.map(transactionsByDay => {
+                return this.state.transactions.transactions.map(transactionsByDay => {
                   return (
                     <TransactionsContainer key={transactionsByDay.date}>
                       <p className="date">{this.formatDate(transactionsByDay.date)}</p>
@@ -140,8 +163,48 @@ class Summary extends React.Component {
             },
             {
               key: 'summary',
+              className: PanesStyles.summary,
               render: () => {
-                return <p>Summary</p>;
+                if (!this.state.transactions.stats.categories) return null;
+                return (
+                  <TableContainer>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th className="cell-header">Category</th>
+                          <th className="cell-header">Amount</th>
+                          <th className="cell-header"># Transactions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.entries(this.state.transactions.stats.categories).map(
+                          ([key, value]) => {
+                            return (
+                              <tr key={key}>
+                                <td className="cell-body">{CATEGORIES[key].label}</td>
+                                <td className="cell-body u-text-center">
+                                  ${this.formatAmount(value.total)}
+                                </td>
+                                <td className="cell-body u-text-center">{value.transactions}</td>
+                              </tr>
+                            );
+                          }
+                        )}
+                        <tr>
+                          <td className="cell-body" />
+                          <td className="cell-body u-text-center">
+                            <strong>
+                              $ {this.formatAmount(this.state.transactions.stats.totalAmount)}
+                            </strong>
+                          </td>
+                          <td className="cell-body u-text-center">
+                            <strong>{this.state.transactions.stats.totalTransactions}</strong>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </TableContainer>
+                );
               },
             },
           ]}

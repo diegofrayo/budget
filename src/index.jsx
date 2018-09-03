@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom';
 import Root from 'pages';
 
 // theme
-import { createPlainStylesObject } from 'styles/createStylesheet';
+import { createPlainStylesObject } from 'styles';
 import 'styles/mainTheme';
 
-// tracking
+// services
 import 'services/tracking';
 import { initConnection } from 'services/firebase';
 

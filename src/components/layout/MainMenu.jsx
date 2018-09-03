@@ -9,7 +9,7 @@ import { goTo, routes } from 'routing';
 import { getUserSession, signOut } from 'services/auth';
 
 // theme
-import { createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles';
 
 const Backdrop = createStyledComponentWithProps(
   'div',
@@ -53,24 +53,24 @@ const MenuContainer = createStyledComponentWithProps(
       box-shadow: ${theme.shadow.base('gray')};
       color: black;
       cursor: default;
-      font-size: ${theme.fontSize.medium};
-      margin-bottom: ${theme.spacing.base}px;
-      padding: ${theme.spacing.large}px ${theme.spacing.base}px;
+      font-size: ${theme.fontSize[4]};
+      margin-bottom: ${theme.spacing[0]};
+      padding: ${theme.spacing[1]} ${theme.spacing[1]};
       text-align: center;
     }
 
     .icon {
-      margin-right: ${theme.spacing.small}px;
+      margin-right: ${theme.spacing[0]};
     }
 
-    .button {
+    .menu-item {
       color: black;
       cursor: pointer;
       background-color: transparent;
       border: 0;
-      font-size: ${theme.fontSize.normal};
+      font-size: ${theme.fontSize[2]};
       outline: 0;
-      padding: ${theme.spacing.medium}px ${theme.spacing.large}px;
+      padding: ${theme.spacing[2]} ${theme.spacing[3]};
       text-align: left;
       width: 100%;
     }
@@ -123,9 +123,9 @@ const MainMenu = ({ onClickOpenMenu, isMenuOpen }) => {
           </span>
         </li>
         {menuItems.map(item => (
-          <li key={`menu-item-${item.route}`} className="menu-item">
+          <li key={`menu-item-${item.route}`}>
             <button
-              className="button"
+              className="menu-item"
               onClick={
                 (item.onClick && item.onClick(onClickOpenMenu)) ||
                 onClickMenuItem(onClickOpenMenu, item.route)

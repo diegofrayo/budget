@@ -14,15 +14,23 @@ export const theme = {
   mediaQueries: {
     mobile: {
       css: `@media screen and (max-width : ${TABLET_MIN_WIDTH - 1}px)`,
-      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+      js: `(max-width : ${TABLET_MIN_WIDTH - 1}px)`,
     },
     tablet: {
       css: `@media (min-width: ${TABLET_MIN_WIDTH}px) and (max-width: ${DESKTOP_MIN_WIDTH - 1}px)`,
-      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+      js: `(min-width: ${TABLET_MIN_WIDTH}px) and (max-width: ${DESKTOP_MIN_WIDTH - 1}px)`,
     },
     desktop: {
       css: `@media (min-width: ${DESKTOP_MIN_WIDTH}px)`,
-      js: `(max-width : ${TABLET_MIN_WIDTH}px)`,
+      js: `@media (min-width: ${DESKTOP_MIN_WIDTH}px)`,
+    },
+    no_mobile: {
+      css: `@media screen and (min-width : ${TABLET_MIN_WIDTH}px)`,
+      js: `(min-width : ${TABLET_MIN_WIDTH}px)`,
+    },
+    no_desktop: {
+      css: `@media screen and (max-width : ${DESKTOP_MIN_WIDTH - 1}px)`,
+      js: `(max-width : ${DESKTOP_MIN_WIDTH - 1}px)`,
     },
     join: mediaQueries => {
       return mediaQueries
@@ -34,24 +42,9 @@ export const theme = {
     },
   },
 
-  spacing: {
-    base: 10,
-    xsmall: 5 / 2,
-    small: 5,
-    normal: 10,
-    medium: 15,
-    large: 20,
-    xlarge: 30,
-  },
+  spacing: ['.3em', '.75em', '1em', '1.25em', '1.5em', '2em', '3em'],
 
-  fontSize: {
-    normal: '1em',
-    xsmall: '0.6em',
-    small: '0.8em',
-    medium: '1.5em',
-    large: '2em',
-    xlarge: '3em',
-  },
+  fontSize: ['.3em', '.75em', '1em', '1.25em', '1.5em', '2em', '3em'],
 
   shadow: {
     base: (color = '#CACACA') => `0 0 5px 0 ${color}`,

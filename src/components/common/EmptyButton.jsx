@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // theme
-import { createStyledComponent } from 'styles/createStylesheet';
+import { createStyledComponent } from 'styles';
 
 const ButtonElement = createStyledComponent(
   'button',

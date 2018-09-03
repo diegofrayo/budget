@@ -1,10 +1,9 @@
 // theme
-import { createStyledComponent } from 'styles/createStylesheet';
+import { createStyledComponent } from 'styles';
 
 const FormContainer = createStyledComponent(
   'section',
   theme => `
-    border-radius: 10px 0 10px 0;
     box-shadow: ${theme.shadow.base('gray')};
     overflow: hidden;
     width: 100%;
@@ -16,10 +15,14 @@ const Title = createStyledComponent(
   theme => `
     background-color: #4c5661;
     color: white;
-    font-size: ${theme.fontSize.large};
-    padding ${theme.spacing.base}px;
+    font-size: ${theme.fontSize[5]};
+    padding ${theme.spacing[0]};
     text-align: center;
     text-transform: uppercase;
+
+    ${theme.mediaQueries.mobile.css} {
+      font-size: ${theme.fontSize[3]};
+    }
   `
 );
 
@@ -27,7 +30,7 @@ const Form = createStyledComponent(
   'form',
   theme => `
     .inputs-container {
-      padding: ${theme.spacing.xlarge}px ${theme.spacing.large}px;
+      padding: ${theme.spacing[4]} ${theme.spacing[3]};
       width: 100%;
     }
 

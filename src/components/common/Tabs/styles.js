@@ -1,10 +1,9 @@
 // theme
-import { createStyledComponent, createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponent, createStyledComponentWithProps } from 'styles';
 
 const TabsContainer = createStyledComponent(
   'section',
   theme => `
-    border-radius: 10px 0 10px 0;
     box-shadow: ${theme.shadow.base('gray')};
     overflow: hidden;
     width: 100%;
@@ -28,8 +27,8 @@ const Tab = createStyledComponentWithProps(
     color: white;
     cursor: pointer;
     flex: 1;
-    font-size: ${theme.fontSize.normal};
-    padding ${theme.spacing.medium}px ${theme.spacing.base}px;
+    font-size: ${theme.fontSize[2]};
+    padding ${theme.spacing[2]} ${theme.spacing[1]};
     text-align: center;
     text-transform: uppercase;
 
@@ -48,9 +47,10 @@ const PanesContainer = createStyledComponent('section', () => ``);
 
 const Pane = createStyledComponentWithProps(
   'section',
-  ({ theme, show }) => `
+  ({ show }) => `
     display: ${show ? 'block' : 'none'};
-    padding: ${theme.spacing.xlarge}px ${theme.spacing.large}px;
+    max-width: 100%;
+    overflow: auto;
     width: 100%;
   `
 );

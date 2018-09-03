@@ -4,7 +4,6 @@ import 'firebase/database';
 
 // services
 import { getUserSession } from 'services/auth';
-import { sort } from 'services/utilities';
 
 let connection;
 
@@ -46,22 +45,34 @@ export const fetchTransactions = (year, month) => {
     .once('value')
     .then(snapshot => {
       if (snapshot.exists()) {
-        return Object.entries(snapshot.val())
-          .map(([date, transactionsByDay]) => {
-            return {
+        return Object.entries(snapshot.val()).reduce(
+          (acum, [date, transactionsByDay]) => {
+            acum.transactions.push({
               date: `${year}/${month}/${date}`,
               transactions: Object.entries(transactionsByDay).map(([id, transaction]) => {
-                return {
-                  id,
-                  ...transaction,
-                };
+                let stats = acum.stats.categories[transaction.category];
+                if (stats === undefined) {
+                  stats = { total: 0, transactions: 0 };
+                }
+
+                stats.total += transaction.amount;
+                stats.transactions += 1;
+
+                acum.stats.totalAmount += transaction.amount; // eslint-disable-line
+                acum.stats.totalTransactions += 1; // eslint-disable-line
+                acum.stats.categories[transaction.category] = stats; // eslint-disable-line
+
+                return { id, ...transaction };
               }),
-            };
-          })
-          .sort(sort('date', 'asc'));
+            });
+
+            return acum;
+          },
+          { transactions: [], stats: { categories: {}, totalAmount: 0, totalTransactions: 0 } }
+        );
       }
 
-      return [];
+      return { transactions: [], stats: {} };
     });
 };
 

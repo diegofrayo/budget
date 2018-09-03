@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import EmptyButton from 'components/common/EmptyButton';
 
 // theme
-import { createStyledComponentWithProps } from 'styles/createStylesheet';
+import { createStyledComponentWithProps } from 'styles';
 
 const Container = createStyledComponentWithProps(
   'section',
@@ -14,16 +14,16 @@ const Container = createStyledComponentWithProps(
     border-radius: 5px;
     display: ${show === true ? 'flex' : 'none'};
     font-weight: bold;
-    margin-top: ${theme.spacing.xlarge}px;
-    padding: ${theme.spacing.medium}px;
+    margin-top: ${theme.spacing[5]};
+    padding: ${theme.spacing[3]};
     position: relative;
     width: 100%;
 
     .button {
       color: inherit;
       position: absolute;
-      right: ${theme.spacing.base}px;
-      top: ${theme.spacing.base}px;
+      right: ${theme.spacing[2]};
+      top: ${theme.spacing[2]};
     }
 
     .material-icons {

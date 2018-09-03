@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // theme
-import { createStyledComponent } from 'styles/createStylesheet';
+import { createStyledComponent } from 'styles';
 
 // components
 import PageContainer from 'components/layout/PageContainer';
@@ -22,9 +22,9 @@ const Text = createStyledComponent(
   'p',
   theme => `
     color: #bd0d0d;
-    font-size: ${theme.fontSize.large};
+    font-size: ${theme.fontSize[4]};
     font-weight: bold;
-    margin-top: ${theme.spacing.xlarge}px;
+    margin-top: ${theme.spacing[5]};
     text-align: center;
     text-transform: uppercase;
   `
