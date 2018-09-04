@@ -24,15 +24,6 @@ export default {
         .exec();
     },
   },
-  /*
-  description: {
-    element: 'textarea',
-    errorMessage: 'Please type a valid description',
-    label: 'Description',
-    required: false,
-    inputProps: {},
-  },
-  */
   date: {
     defaultValue: getCurrentDate(),
     element: 'input',
@@ -69,7 +60,7 @@ export default {
   },
   category: {
     component: Dropdown,
-    defaultValue: 'comida',
+    defaultValue: ['comidas'],
     element: 'dropdown',
     errorMessage: 'Please type a valid category',
     label: 'Category',
@@ -77,11 +68,38 @@ export default {
     inputProps: {
       type: 'select',
       options: Object.values(CATEGORIES),
+      multiple: true,
+    },
+    handlers: {
+      onChange: event => {
+        const { options, name, value: optionValue } = event.currentTarget;
+
+        const value = [];
+
+        // eslint-disable-next-line
+        for (let i = 0, length = options.length; i < length; i += 1) {
+          const option = options[i];
+          const isOptionSelected = option.getAttribute('data-selected') === 'true';
+
+          if (option.value === optionValue && isOptionSelected) {
+            continue;
+          }
+
+          if (
+            (isOptionSelected && option.value !== optionValue) ||
+            (!isOptionSelected && option.value === optionValue)
+          ) {
+            value.push(option.value);
+          }
+        }
+
+        return { name, value };
+      },
     },
     validate: value => {
       return validator(value)
-        .string()
-        .notAllowEmpty()
+        .array()
+        .minLength(1)
         .exec();
     },
   },

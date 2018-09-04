@@ -5,12 +5,6 @@
   "settings": {
     "js_prettier": {
       "auto_format_on_save": true,
-      "prettier_options": {
-        "printWidth": 90,
-        "singleQuote": true,
-        "tabWidth": 2,
-        "trailingComma": "es5"
-      }
     },
     "SublimeLinter.linters.eslint.disable": false,
     "SublimeLinter.linters.stylelint.disable": false,

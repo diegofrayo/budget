@@ -5,6 +5,10 @@ const isEmail = email => {
 
 const Validator = (value, isValid) => {
   return {
+    array: () => {
+      const validationResult = isValid && Array.isArray(value);
+      return Validator(value, validationResult);
+    },
     string: () => {
       const validationResult = isValid && typeof value === 'string';
       return Validator(value, validationResult);
@@ -12,7 +16,9 @@ const Validator = (value, isValid) => {
     number: () => {
       const transformedValue = Number(value);
       const validationResult =
-        isValid && typeof transformedValue === 'number' && Number.isNaN(transformedValue) === false;
+        isValid &&
+        typeof transformedValue === 'number' &&
+        Number.isNaN(transformedValue) === false;
       return Validator(transformedValue, validationResult);
     },
 

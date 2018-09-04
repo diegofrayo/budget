@@ -55,9 +55,15 @@ class Form extends React.Component {
       });
   };
 
-  onChangeInput = event => {
-    const { name, value } = event.currentTarget;
+  onChangeInputFNWrapper = fn => event => this.onChangeInput(fn(event));
 
+  onChangeInputEventWrapper = () => event =>
+    this.onChangeInput({
+      name: event.currentTarget.name,
+      value: event.currentTarget.value,
+    });
+
+  onChangeInput = ({ name, value }) => {
     this.setState(prevState => {
       const formValues = {
         ...prevState.formValues,
@@ -111,7 +117,10 @@ class Form extends React.Component {
   validateForm = (inputNameParam, formValues, formErrors) => {
     return Object.entries(this.props.formConfig).reduce(
       (acum, [inputName, inputConfig]) => {
-        if (inputConfig.required && inputConfig.validate(formValues[inputName]) === false) {
+        if (
+          inputConfig.required &&
+          inputConfig.validate(formValues[inputName]) === false
+        ) {
           acum.valid = false; // eslint-disable-line
           if (inputName === inputNameParam) {
             acum.messages[inputName] = inputConfig.errorMessage; // eslint-disable-line
@@ -148,7 +157,11 @@ class Form extends React.Component {
                     errorMessage={this.state.formErrors.messages[inputName]}
                     uiProps={inputConfig.uiProps}
                     inputProps={inputConfig.inputProps}
-                    onChangeInput={this.onChangeInput}
+                    onChangeInput={
+                      inputConfig.handlers && inputConfig.handlers.onChange
+                        ? this.onChangeInputFNWrapper(inputConfig.handlers.onChange)
+                        : this.onChangeInputEventWrapper()
+                    }
                   />
                 );
               })}
