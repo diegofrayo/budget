@@ -62,12 +62,12 @@ export default {
     component: Dropdown,
     defaultValue: ['comidas'],
     element: 'dropdown',
-    errorMessage: 'Please type a valid category',
+    errorMessage: 'Please select a category',
     label: 'Category',
     required: true,
     inputProps: {
       type: 'select',
-      options: Object.values(CATEGORIES),
+      options: Object.values(CATEGORIES).slice(1),
       multiple: true,
     },
     handlers: {

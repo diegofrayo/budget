@@ -8,7 +8,10 @@ import { getUserSession } from 'services/auth';
 let connection;
 
 export const initConnection = () => {
-  if (firebase && (firebase.apps === undefined || (firebase.apps && firebase.apps.length === 0))) {
+  if (
+    firebase &&
+    (firebase.apps === undefined || (firebase.apps && firebase.apps.length === 0))
+  ) {
     firebase.initializeApp({
       databaseURL: APP_SETTINGS.firebase_database_url,
       authDomain: APP_SETTINGS.firebase_auth_domain,
@@ -50,17 +53,22 @@ export const fetchTransactions = (year, month) => {
             acum.transactions.push({
               date: `${year}/${month}/${date}`,
               transactions: Object.entries(transactionsByDay).map(([id, transaction]) => {
-                let stats = acum.stats.categories[transaction.category];
-                if (stats === undefined) {
-                  stats = { total: 0, transactions: 0 };
-                }
+                transaction.category.forEach((category, index) => {
+                  let stats = acum.stats.categories[category];
+                  if (stats === undefined) {
+                    stats = { total: 0, transactions: 0 };
+                  }
 
-                stats.total += transaction.amount;
-                stats.transactions += 1;
+                  stats.total += transaction.amount;
+                  stats.transactions += 1;
 
-                acum.stats.totalAmount += transaction.amount; // eslint-disable-line
-                acum.stats.totalTransactions += 1; // eslint-disable-line
-                acum.stats.categories[transaction.category] = stats; // eslint-disable-line
+                  if (index === 0) {
+                    acum.stats.totalAmount += transaction.amount; // eslint-disable-line
+                    acum.stats.totalTransactions += 1; // eslint-disable-line
+                  }
+
+                  acum.stats.categories[category] = stats; // eslint-disable-line
+                });
 
                 return { id, ...transaction };
               }),
@@ -68,7 +76,10 @@ export const fetchTransactions = (year, month) => {
 
             return acum;
           },
-          { transactions: [], stats: { categories: {}, totalAmount: 0, totalTransactions: 0 } }
+          {
+            transactions: [],
+            stats: { categories: {}, totalAmount: 0, totalTransactions: 0 },
+          }
         );
       }
 

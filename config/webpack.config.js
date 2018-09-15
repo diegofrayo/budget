@@ -3,9 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-
-  config: (isDevelopmentEnv) => {
-
+  config: isDevelopmentEnv => {
     if (isDevelopmentEnv) {
       return {
         devtool: 'source-map',
@@ -28,11 +26,13 @@ module.exports = {
   },
 
   entry: isDevelopmentEnv => {
-
     let entry = ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'];
 
     if (isDevelopmentEnv) {
-      entry = entry.concat(['react-hot-loader/patch', 'webpack-hot-middleware/client?overlay=false']);
+      entry = entry.concat([
+        'react-hot-loader/patch',
+        'webpack-hot-middleware/client?overlay=false',
+      ]);
     }
 
     return entry;
@@ -46,11 +46,13 @@ module.exports = {
   },
 
   plugins: ({ isDevelopmentEnv, isESLintEnabled, settings }) => {
-
     let plugins = [new webpack.DefinePlugin({ APP_SETTINGS: JSON.stringify(settings) })];
 
     if (isDevelopmentEnv) {
-      plugins = plugins.concat([new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin()]);
+      plugins = plugins.concat([
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+      ]);
     } else {
       plugins = plugins.concat([
         new webpack.optimize.OccurrenceOrderPlugin(),
@@ -70,7 +72,7 @@ module.exports = {
               configFile: path.join(__dirname, './../.eslintrc'),
             },
           },
-        }),
+        })
       );
     }
 
@@ -78,7 +80,6 @@ module.exports = {
   },
 
   babel: isDevelopmentEnv => {
-
     const babelConfig = {
       test: /(\.js|.jsx)$/,
       exclude: /(node_modules|webpack_cache|config)/,
@@ -89,6 +90,7 @@ module.exports = {
             plugins: [
               '@babel/plugin-proposal-object-rest-spread',
               '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-syntax-dynamic-import',
             ],
             presets: ['@babel/preset-env', '@babel/react'],
             env: {
@@ -109,7 +111,6 @@ module.exports = {
   },
 
   eslint: isESLintEnabled => {
-
     if (isESLintEnabled) {
       return {
         exclude: /(node_modules|webpack_cache|config)/,
@@ -121,5 +122,4 @@ module.exports = {
 
     return {};
   },
-
 };

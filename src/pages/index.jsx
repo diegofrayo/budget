@@ -58,6 +58,7 @@ const Root = () => {
   if (APP_SETTINGS.environment === 'development') {
     return <AppContainer>{renderApp()}</AppContainer>;
   }
+
   return renderApp();
 };
 

@@ -26,20 +26,19 @@ import {
   Table,
 } from './styles';
 
-// data
-import DEFAULT_DATA from './data';
-
 class Summary extends React.Component {
   state = {
-    transactions: DEFAULT_DATA,
-    // transactions: { transactions: [], stats: {} },
+    transactions: { transactions: [], stats: {} },
     selectedYear: `${new Date().getFullYear()}`,
     selectedMonth: formatNumberLessThanZero(new Date().getMonth() + 1),
   };
 
   componentDidMount() {
+    // return this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
     if (APP_SETTINGS.environment !== 'development') {
       this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+    } else {
+      import('./data').then(module => this.setState({ transactions: module.default }));
     }
   }
 
@@ -53,7 +52,8 @@ class Summary extends React.Component {
   }
 
   onChangeDropdown = event => {
-    const attrName = event.currentTarget.name === 'years' ? 'selectedYear' : 'selectedMonth';
+    const attrName =
+      event.currentTarget.name === 'years' ? 'selectedYear' : 'selectedMonth';
     const { value } = event.currentTarget;
     this.setState({ [attrName]: value });
   };
@@ -84,7 +84,6 @@ class Summary extends React.Component {
 
   fetchTransactions = (year, month) => {
     return fetchTransactions(year, month).then(transactions => {
-      console.log(transactions);
       this.setState({
         transactions: {
           stats: transactions.stats,
@@ -92,6 +91,17 @@ class Summary extends React.Component {
         },
       });
     });
+  };
+
+  // eslint-disable-next-line
+  sortStats = ([keyA, valueA], [keyB, valueB]) => {
+    if (valueA.total === valueB.total) {
+      return 0;
+    } else if (valueA.total > valueB.total) {
+      return -1;
+    }
+
+    return 1;
   };
 
   render() {
@@ -142,8 +152,17 @@ class Summary extends React.Component {
                               <TransactionItem item="title">
                                 <p className="text text-title">{transaction.title}</p>
                                 <p className="text text-category">
-                                  <i className="material-icons icon">folder</i>
-                                  {CATEGORIES[transaction.category].label}
+                                  {transaction.category.map(category => {
+                                    return (
+                                      <span
+                                        className="category-item"
+                                        key={`${transaction.id}-${category}`}
+                                      >
+                                        <i className="material-icons icon">folder</i>
+                                        {CATEGORIES[category].label}
+                                      </span>
+                                    );
+                                  })}
                                 </p>
                               </TransactionItem>
                               <TransactionItem item="amount">
@@ -177,28 +196,34 @@ class Summary extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(this.state.transactions.stats.categories).map(
-                          ([key, value]) => {
+                        {Object.entries(this.state.transactions.stats.categories)
+                          .sort(this.sortStats)
+                          .map(([key, value]) => {
                             return (
                               <tr key={key}>
                                 <td className="cell-body">{CATEGORIES[key].label}</td>
                                 <td className="cell-body u-text-center">
                                   ${this.formatAmount(value.total)}
                                 </td>
-                                <td className="cell-body u-text-center">{value.transactions}</td>
+                                <td className="cell-body u-text-center">
+                                  {value.transactions}
+                                </td>
                               </tr>
                             );
-                          }
-                        )}
+                          })}
                         <tr>
                           <td className="cell-body" />
                           <td className="cell-body u-text-center">
                             <strong>
-                              $ {this.formatAmount(this.state.transactions.stats.totalAmount)}
+                              {this.formatAmount(
+                                this.state.transactions.stats.totalAmount
+                              )}
                             </strong>
                           </td>
                           <td className="cell-body u-text-center">
-                            <strong>{this.state.transactions.stats.totalTransactions}</strong>
+                            <strong>
+                              {this.state.transactions.stats.totalTransactions}
+                            </strong>
                           </td>
                         </tr>
                       </tbody>

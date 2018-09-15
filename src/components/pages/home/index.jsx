@@ -2,7 +2,6 @@
 import React from 'react';
 
 // services
-import { createTransaction } from 'services/mocks';
 import { createCustomError } from 'services/utilities';
 
 // components
@@ -13,8 +12,20 @@ import PageContainer from 'components/layout/PageContainer';
 import formConfig from './formConfig';
 
 class Home extends React.Component {
+  componentDidMount() {
+    if (APP_SETTINGS.environment !== 'development') {
+      import('./../../../services/firebase').then(moduleLoaded => {
+        this.createTransaction = moduleLoaded.createTransaction;
+      });
+    } else {
+      import('./../../../services/mocks').then(moduleLoaded => {
+        this.createTransaction = moduleLoaded.createTransaction;
+      });
+    }
+  }
+
   onSubmit = formValues => {
-    return createTransaction(formValues)
+    return this.createTransaction(formValues)
       .then(() => {
         return {
           type: 'success',

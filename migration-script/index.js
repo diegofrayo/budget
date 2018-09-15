@@ -1,6 +1,6 @@
 const firebase = require('firebase');
 const fs = require('fs');
-const { AUGUST: data } = require('./data');
+const { SEPTEMBER: data } = require('./data');
 
 // ------------------------ Utils Functions ------------------------
 
@@ -8,9 +8,9 @@ const formatNumberLessThanZero = value => (value <= 9 ? `0${value}` : value);
 
 const transformDate = date => {
   const items = date.split('/');
-  return `${items[2]}/${formatNumberLessThanZero(Number(items[1]))}/${formatNumberLessThanZero(
-    Number(items[0])
-  )}`;
+  return `${items[2]}/${formatNumberLessThanZero(
+    Number(items[1])
+  )}/${formatNumberLessThanZero(Number(items[0]))}`;
 };
 
 const sortByDate = (a, b) => {
@@ -33,12 +33,12 @@ const dataTransformed = data.data
   .map(item => {
     return {
       title: item[0],
-      category: item[2].toLowerCase().replace(' ', '_'),
+      category: [item[2].toLowerCase().replace(' ', '_')],
       date: transformDate(item[1]),
       amount: Number(item[3].replace(/\./g, '').replace('$', '')),
       description: '',
       // title: 'Title',
-      // category: 'category',
+      // category: ['category'],
     };
   })
   .sort(sortByDate);
@@ -68,7 +68,9 @@ const connection = firebase.database().ref();
 
 Object.entries(dataTransformedOnObject).forEach(([date, transactions]) => {
   const username = 'diegofrayo' || 'guest';
-  const conn = connection.child(`budget/${username}/transactions/2018/${data.month}/${date}`);
+  const conn = connection.child(
+    `budget/${username}/transactions/2018/${data.month}/${date}`
+  );
   transactions.forEach(transaction => conn.push().set(transaction));
 });
 

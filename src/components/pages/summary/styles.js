@@ -9,20 +9,26 @@ import {
 const DropdownStyles = {
   left: createClassname(
     theme => `
-    margin-bottom: ${theme.spacing[3]};
+      margin-bottom: ${theme.spacing[3]};
 
-    ${theme.mediaQueries.join([theme.mediaQueries.tablet.css, theme.mediaQueries.desktop.css])} {
-      padding-right: ${theme.spacing[1]};
-    }
+      ${theme.mediaQueries.join([
+        theme.mediaQueries.tablet.css,
+        theme.mediaQueries.desktop.css,
+      ])} {
+        padding-right: ${theme.spacing[1]};
+      }
 `
   ),
   right: createClassname(
     theme => `
-    margin-bottom: ${theme.spacing[3]};
+      margin-bottom: ${theme.spacing[3]};
 
-    ${theme.mediaQueries.join([theme.mediaQueries.tablet.css, theme.mediaQueries.desktop.css])} {
-      padding-left: ${theme.spacing[1]};
-    }
+      ${theme.mediaQueries.join([
+        theme.mediaQueries.tablet.css,
+        theme.mediaQueries.desktop.css,
+      ])} {
+        padding-left: ${theme.spacing[1]};
+      }
 `
   ),
 };
@@ -35,7 +41,7 @@ const PanesStyles = {
   ),
   summary: createClassname(
     theme => `
-      padding: ${theme.spacing[5]} ${theme.spacing[4]};
+      padding: ${theme.spacing[0]};
     `
   ),
 };
@@ -86,7 +92,7 @@ const TransactionItemStyles = {
       align-items: flex-start;
       flex-direction: column;
       justify-content: center;
-      width: 60%;
+      width: 75%;
       padding: ${theme.spacing[0]} ${theme.spacing[1]};
 
       .text {
@@ -96,12 +102,31 @@ const TransactionItemStyles = {
       .text-title {
         font-weight: bold;
       }
+
+      .category-item {
+        background-color: #4c5661;
+        border-radius: 5px;
+        color: white;
+        display: inline-block;
+        font-size: ${theme.fontSize[1]};
+        font-weight: bold;
+        margin: 2px 4px;
+        margin-left: 0;
+        padding: ${theme.spacing[0]} ${theme.spacing[1]} 1px;
+      }
+
+      .icon {
+        color: white;
+        margin-right: 3px;
+        position: relative;
+        top: -2px;
+      }
   `
   ),
   amount: createStyles(
     theme => `
       justify-content: flex-end;
-      width: 40%;
+      width: 25%;
       padding: ${theme.spacing[1]};
 
       .icon {
@@ -127,8 +152,6 @@ const TransactionItem = createStyledComponentWithProps(
     .icon {
       color: #4c4c4c;
       margin-right: ${theme.spacing[0]};
-      position: relative;
-      top: -2px;
     }
 
     ${theme.mediaQueries.mobile.css} {
@@ -142,23 +165,48 @@ const TransactionItem = createStyledComponentWithProps(
 const Table = createStyledComponent(
   'table',
   () => `
-  max-width: 100%;
-  width: 100%;
+    min-width: 500px;
+    table-layout: fixed;
+    width: 100%;
+    word-break: break-all;
 
-  .cell-header{
-    background-color: #ececec;
-    border: 1px solid #dadada;
-    padding: 10px;
-  }
+    .cell-header{
+      background-color: #ececec;
+      border: 1px solid #dadada;
+      padding: 10px;
+    }
 
-  .cell-body{
-    border: 1px solid #dadada;
-    padding: 5px;
-  }
+    .cell-body{
+      border: 1px solid #dadada;
+      padding: 5px;
+    }
   `
 );
 
-const TableContainer = createStyledComponent('section', () => ``);
+const TableContainer = createStyledComponent(
+  'section',
+  theme => `
+    overflow: auto;
+    margin: 0 auto;
+
+    @media screen and (max-width : 400px) {
+      border: 1px solid #dddddd;
+      width: 250px;
+    }
+
+    @media screen and (min-width: 401px) and (max-width : 500px) {
+      width: 350px;
+    }
+
+    @media screen and (min-width: 501px) and (max-width : 600px) {
+      width: 450px;
+    }
+
+    ${theme.mediaQueries.no_mobile.css} {
+      width: 100%;
+    }
+  `
+);
 
 export {
   DropdownStyles,

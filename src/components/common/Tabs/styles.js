@@ -35,8 +35,9 @@ const Tab = createStyledComponentWithProps(
     ${
       selected
         ? `
-    background-color: #637180;
-    font-weight: bold;
+          background-color: #637180;
+          font-weight: bold;
+          text-decoration: underline;
       `
         : ''
     }
