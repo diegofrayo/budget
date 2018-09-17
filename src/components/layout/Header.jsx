@@ -74,7 +74,7 @@ const Header = () => (
           <i className="material-icons main-menu-icon">menu</i>
         </EmptyButton>
 
-        <Link to={routes.HOME} className="link">
+        <Link to={routes.HOME} className="link" href={routes.HOME}>
           <i className="material-icons app-icon">monetization_on</i>
         </Link>
 

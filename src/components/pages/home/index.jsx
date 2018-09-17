@@ -2,7 +2,7 @@
 import React from 'react';
 
 // services
-import { createCustomError } from 'services/utilities';
+import { createCustomError, transformFormValues } from 'services/utilities';
 
 // components
 import Form from 'components/common/Form';
@@ -25,7 +25,7 @@ class Home extends React.Component {
   }
 
   onSubmit = formValues => {
-    return this.createTransaction(formValues)
+    return this.createTransaction(transformFormValues(formValues, formConfig))
       .then(() => {
         return {
           type: 'success',

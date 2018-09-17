@@ -49,8 +49,18 @@ export const sort = (attr = '', order = 'asc') => {
   return sortFn;
 };
 
-export const createArray = length => Array.from(Array(length).keys()).map(value => value + 1);
+export const createArray = length =>
+  Array.from(Array(length).keys()).map(value => value + 1);
 
 export const resetScroll = scrollTop => {
   document.getElementById('body-page-container').scrollTop = scrollTop || 0;
+};
+
+export const transformFormValues = (formValues, formConfig) => {
+  return Object.entries(formConfig).reduce((acum, [name, config]) => {
+    if (config.transform) {
+      acum[name] = config.transform(formValues[name]); // eslint-disable-line
+    }
+    return acum;
+  }, formValues);
 };

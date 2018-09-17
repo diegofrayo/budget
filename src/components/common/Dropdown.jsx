@@ -1,56 +1,50 @@
 // npm libs
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import Select from 'react-select';
 
-// styles
-import { createClassname } from 'styles';
-
-const Styles = {
-  multiple: createClassname(() => `min-height: 100px`),
-};
-
-const Select = ({ id, name, value, options, className, onChange, ...rest }) => {
+const Dropdown = ({
+  id,
+  name,
+  value,
+  options,
+  className,
+  multiple,
+  onChange,
+  ...rest
+}) => {
   return (
-    <select
-      name={name}
+    <Select
+      className={className}
+      defaultValue={value}
       id={id}
-      value={value}
-      className={classnames(className, rest.multiple && Styles.multiple)}
+      name={name}
+      options={options}
       onChange={onChange}
+      isMulti={multiple === true}
       {...rest}
-    >
-      {options.map(option => {
-        return (
-          <option
-            key={option.value}
-            value={option.value}
-            data-selected={value.indexOf(option.value) !== -1}
-          >
-            {option.label}
-          </option>
-        );
-      })}
-    </select>
+    />
   );
 };
 
-Select.propTypes = {
+Dropdown.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })
   ).isRequired,
+  multiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
 
-Select.defaultProps = {
+Dropdown.defaultProps = {
   className: '',
+  multiple: false,
 };
 
-export default Select;
+export default Dropdown;

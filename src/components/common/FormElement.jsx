@@ -114,7 +114,12 @@ const FormElement = ({
         id={name}
         name={name}
         value={value || defaultValue || ''}
-        className={classnames('input-element', inputProps.type, element)}
+        className={classnames(
+          'input-element',
+          inputProps.type,
+          element,
+          inputProps.className
+        )}
         onChange={onChangeInput}
         {...inputProps}
       />
@@ -128,11 +133,17 @@ FormElement.propTypes = {
   name: PropTypes.string.isRequired,
   required: PropTypes.bool,
   defaultValue: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
     PropTypes.array,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
   ]),
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array]),
+  value: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+  ]),
   element: PropTypes.string.isRequired,
   component: PropTypes.func,
   errorMessage: PropTypes.string,

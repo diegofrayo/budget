@@ -10,7 +10,7 @@ import Tabs from 'components/common/Tabs';
 
 // services
 import { fetchTransactions } from 'services/firebase';
-import { createArray, formatNumberLessThanZero, sort } from 'services/utilities';
+import { createArray, sort } from 'services/utilities';
 
 // constants
 import { CATEGORIES, DAYS, YEARS, MONTHS } from 'constants/index';
@@ -29,33 +29,49 @@ import {
 class Summary extends React.Component {
   state = {
     transactions: { transactions: [], stats: {} },
-    selectedYear: `${new Date().getFullYear()}`,
-    selectedMonth: formatNumberLessThanZero(new Date().getMonth() + 1),
+    selectedYear: (currentYear => ({
+      value: currentYear,
+      label: currentYear,
+    }))(new Date().getFullYear()),
+    selectedMonth: (currentMonth => {
+      return Object.values(MONTHS)[currentMonth];
+    })(new Date().getMonth()),
   };
 
   componentDidMount() {
-    // return this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
     if (APP_SETTINGS.environment !== 'development') {
       this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+      import('./../../../services/firebase').then(moduleLoaded => {
+        this.deleteTransaction = moduleLoaded.deleteTransaction;
+      });
     } else {
-      import('./data').then(module => this.setState({ transactions: module.default }));
+      import('./../../../services/mocks').then(moduleLoaded => {
+        this.deleteTransaction = moduleLoaded.deleteTransaction;
+      });
+      import('./data').then(moduleLoaded => {
+        this.setState({ transactions: moduleLoaded.default });
+      });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.state.selectedYear !== prevState.selectedYear ||
-      this.state.selectedMonth !== prevState.selectedMonth
+      this.state.selectedYear.value !== prevState.selectedYear.value ||
+      this.state.selectedMonth.value !== prevState.selectedMonth.value
     ) {
-      this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+      this.fetchTransactions(
+        this.state.selectedYear.value,
+        this.state.selectedMonth.value
+      );
     }
   }
 
-  onChangeDropdown = event => {
-    const attrName =
-      event.currentTarget.name === 'years' ? 'selectedYear' : 'selectedMonth';
-    const { value } = event.currentTarget;
-    this.setState({ [attrName]: value });
+  onChangeYearDropdown = value => {
+    this.setState({ selectedYear: value });
+  };
+
+  onChangeMonthDropdown = value => {
+    this.setState({ selectedMonth: value });
   };
 
   formatDate = dateStr => {
@@ -108,26 +124,44 @@ class Summary extends React.Component {
     return (
       <PageContainer>
         <Box row expand-x>
-          <Box column w={['100%', '50%', '50%']} className={DropdownStyles.left}>
+          <Box
+            column
+            w={['100%', '50%', '50%']}
+            className={DropdownStyles.left.container}
+          >
             <FormElement
               label="Select a Year"
               name="years"
+              defaultValue={this.state.selectedYear}
               value={this.state.selectedYear}
               element="dropdown"
               component={Dropdown}
-              inputProps={{ type: 'select', options: Object.values(YEARS) }}
-              onChangeInput={this.onChangeDropdown}
+              inputProps={{
+                type: 'select',
+                options: Object.values(YEARS),
+                className: DropdownStyles.left.input,
+              }}
+              onChangeInput={this.onChangeYearDropdown}
             />
           </Box>
-          <Box column w={['100%', '50%', '50%']} className={DropdownStyles.right}>
+          <Box
+            column
+            w={['100%', '50%', '50%']}
+            className={DropdownStyles.right.container}
+          >
             <FormElement
               label="Select a Month"
               name="months"
+              defaultValue={this.state.selectedMonth}
               value={this.state.selectedMonth}
               element="dropdown"
               component={Dropdown}
-              inputProps={{ type: 'select', options: Object.values(MONTHS) }}
-              onChangeInput={this.onChangeDropdown}
+              inputProps={{
+                type: 'select',
+                options: Object.values(MONTHS),
+                className: DropdownStyles.right.input,
+              }}
+              onChangeInput={this.onChangeMonthDropdown}
             />
           </Box>
         </Box>

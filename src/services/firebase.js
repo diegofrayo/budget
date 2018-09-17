@@ -42,6 +42,15 @@ export const createTransaction = ({
     });
 };
 
+export const deleteTransaction = ({ id = '', date = '' }) => {
+  const [year, month, day] = date.split('-');
+  return connection
+    .child(
+      `budget/${getUserSession().username}/transactions/${year}/${month}/${day}/${id}`
+    )
+    .delete();
+};
+
 export const fetchTransactions = (year, month) => {
   return connection
     .child(`budget/${getUserSession().username}/transactions/${year}/${month}`)

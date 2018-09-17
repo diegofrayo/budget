@@ -7,8 +7,9 @@ import {
 } from 'styles';
 
 const DropdownStyles = {
-  left: createClassname(
-    theme => `
+  left: {
+    container: createClassname(
+      theme => `
       margin-bottom: ${theme.spacing[3]};
 
       ${theme.mediaQueries.join([
@@ -18,9 +19,12 @@ const DropdownStyles = {
         padding-right: ${theme.spacing[1]};
       }
 `
-  ),
-  right: createClassname(
-    theme => `
+    ),
+    input: createClassname(() => `padding: 0;`),
+  },
+  right: {
+    container: createClassname(
+      theme => `
       margin-bottom: ${theme.spacing[3]};
 
       ${theme.mediaQueries.join([
@@ -30,7 +34,9 @@ const DropdownStyles = {
         padding-left: ${theme.spacing[1]};
       }
 `
-  ),
+    ),
+    input: createClassname(() => `padding: 0;`),
+  },
 };
 
 const PanesStyles = {

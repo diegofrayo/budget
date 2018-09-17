@@ -1,3 +1,6 @@
+// npm libs
+import { css } from 'emotion';
+
 // services
 import { getCurrentDate } from 'services/utilities';
 
@@ -57,10 +60,13 @@ export default {
         .min(1000)
         .exec();
     },
+    transform: value => {
+      return Number(value);
+    },
   },
   category: {
     component: Dropdown,
-    defaultValue: ['comidas'],
+    defaultValue: [CATEGORIES.comidas],
     element: 'dropdown',
     errorMessage: 'Please select a category',
     label: 'Category',
@@ -69,31 +75,13 @@ export default {
       type: 'select',
       options: Object.values(CATEGORIES).slice(1),
       multiple: true,
+      className: css`
+        padding: 0;
+      `,
     },
     handlers: {
-      onChange: event => {
-        const { options, name, value: optionValue } = event.currentTarget;
-
-        const value = [];
-
-        // eslint-disable-next-line
-        for (let i = 0, length = options.length; i < length; i += 1) {
-          const option = options[i];
-          const isOptionSelected = option.getAttribute('data-selected') === 'true';
-
-          if (option.value === optionValue && isOptionSelected) {
-            continue;
-          }
-
-          if (
-            (isOptionSelected && option.value !== optionValue) ||
-            (!isOptionSelected && option.value === optionValue)
-          ) {
-            value.push(option.value);
-          }
-        }
-
-        return { name, value };
+      onChange: value => {
+        return { name: 'category', value };
       },
     },
     validate: value => {
@@ -101,6 +89,11 @@ export default {
         .array()
         .minLength(1)
         .exec();
+    },
+    transform: categories => {
+      return categories.map(category => {
+        return category.value;
+      });
     },
   },
 };
