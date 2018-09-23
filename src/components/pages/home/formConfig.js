@@ -78,6 +78,7 @@ export default {
       className: css`
         padding: 0;
       `,
+      menuPlacement: 'top',
     },
     handlers: {
       onChange: value => {

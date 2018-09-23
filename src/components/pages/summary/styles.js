@@ -6,6 +6,15 @@ import {
   createStyles,
 } from 'styles';
 
+const DeleteButton = createClassname(
+  () => `
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: 5px;
+`
+);
+
 const DropdownStyles = {
   left: {
     container: createClassname(
@@ -84,6 +93,7 @@ const Transaction = createStyledComponent(
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    position: relative;
     width: 100%;
 
     &:last-child {
@@ -215,6 +225,7 @@ const TableContainer = createStyledComponent(
 );
 
 export {
+  DeleteButton,
   DropdownStyles,
   PanesStyles,
   TransactionsContainer,

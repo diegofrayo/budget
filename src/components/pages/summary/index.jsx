@@ -1,5 +1,6 @@
 // npm libs
 import React from 'react';
+import classnames from 'classnames';
 
 // components
 import Box from 'components/common/Box';
@@ -17,6 +18,7 @@ import { CATEGORIES, DAYS, YEARS, MONTHS } from 'constants/index';
 
 // styles
 import {
+  DeleteButton as DeleteButtonStyles,
   DropdownStyles,
   PanesStyles,
   TransactionsContainer,
@@ -25,6 +27,14 @@ import {
   TableContainer,
   Table,
 } from './styles';
+
+const DeleteButton = props => {
+  return (
+    <i className={classnames('material-icons', DeleteButtonStyles)} {...props}>
+      delete
+    </i>
+  );
+};
 
 class Summary extends React.Component {
   state = {
@@ -40,7 +50,10 @@ class Summary extends React.Component {
 
   componentDidMount() {
     if (APP_SETTINGS.environment !== 'development') {
-      this.fetchTransactions(this.state.selectedYear, this.state.selectedMonth);
+      this.fetchTransactions(
+        this.state.selectedYear.value,
+        this.state.selectedMonth.value
+      );
       import('./../../../services/firebase').then(moduleLoaded => {
         this.deleteTransaction = moduleLoaded.deleteTransaction;
       });
@@ -107,6 +120,11 @@ class Summary extends React.Component {
         },
       });
     });
+  };
+
+  deleteTransactionHandler = () => {
+    console.log('this');
+    alert('To Do: Implement this feature');
   };
 
   // eslint-disable-next-line
@@ -205,6 +223,7 @@ class Summary extends React.Component {
                                   {this.formatAmount(transaction.amount)}
                                 </p>
                               </TransactionItem>
+                              <DeleteButton onClick={this.deleteTransactionHandler} />
                             </Transaction>
                           );
                         })}
