@@ -1,7 +1,7 @@
 {
   "name": "budget",
   "version": "1.0.0",
-  "description": "App to take control of our finances",
+  "description": "React web application",
   "keywords": [
     "react",
     "emotion",

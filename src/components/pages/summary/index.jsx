@@ -45,7 +45,7 @@ class Summary extends React.Component {
     }))(new Date().getFullYear()),
     selectedMonth: (currentMonth => {
       return Object.values(MONTHS)[currentMonth];
-    })(new Date().getMonth()),
+    })(8),
   };
 
   componentDidMount() {

@@ -7,7 +7,6 @@ package-lock.json
 src/services/tracking.js
 src/components/pages/summary/data.js
 migration-script/data.js
-temp.js
 
 .DS_Store
 *.log

@@ -1,5 +1,5 @@
 # budget
 
-- **Description**: App to take control of our finances
+- **Description**: React web application
 - **Tech Stack:** react, emotion, firebase
 - **URL:** https://diegofrayo.com/budget
